@@ -5,20 +5,13 @@ import type { Book } from "./types/Book";
 import BookGrid from "./components/BookLists/BookGrid";
 import Search from "./components/Search";
 import BookDetail from "./components/BookDetail";
+import { Link, useParams } from "react-router";
 
 function App() {
   const [books, setBooks] = useState<Book[]>(initialBooks);
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
+  const { bookId } = useParams();
 
-  const selectedBookId = selectedBook?.id ?? null;
-
-  function select(book: Book) {
-    if (book.id === selectedBookId) {
-      setSelectedBook(null);
-    } else {
-      setSelectedBook(book);
-    }
-  }
+  const selectedBook = books.find((b) => b.id === bookId) ?? null;
 
   return (
     <main>
@@ -27,17 +20,13 @@ function App() {
         <Search />
         {selectedBook && (
           <div>
-            <button onClick={() => setSelectedBook(null)}>Back</button>
+            <Link to="/">Back</Link>
             <BookDetail book={selectedBook} />
           </div>
         )}
       </section>
       <section className="book-list">
-        <BookGrid
-          books={books}
-          select={select}
-          selectedBookId={selectedBookId}
-        />
+        <BookGrid books={books} selectedBook={selectedBook} />
       </section>
     </main>
   );
