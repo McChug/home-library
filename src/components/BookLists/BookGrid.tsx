@@ -3,8 +3,7 @@ import CoverThumbnail from "../BookThumbnails/CoverThumbnail";
 import type { BookListProps } from "../../types/BookListProps";
 import { Link } from "react-router";
 
-function BookGrid({ books, selectedBook }: BookListProps) {
-  const selectedBookId = selectedBook?.id ?? null;
+function BookGrid({ books, selectedBookId }: BookListProps) {
   return (
     <div className="book-grid">
       {books.map((book) => (

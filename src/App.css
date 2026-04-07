@@ -9,15 +9,19 @@ body {
 main {
   display: flex;
   flex-direction: row-reverse;
+  align-items: flex-start;
   gap: 2rem;
 }
 
 .content {
-  flex: 2;
+  flex: 3;
+
+  position: sticky;
+  top: 0;
 }
 
 .book-list {
-  flex: 3;
+  flex: 2;
 
   display: flex;
   justify-content: center;

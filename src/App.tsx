@@ -12,6 +12,7 @@ function App() {
   const { bookId } = useParams();
 
   const selectedBook = books.find((b) => b.id === bookId) ?? null;
+  const selectedBookId = selectedBook?.id ?? null;
 
   return (
     <main>
@@ -26,7 +27,7 @@ function App() {
         )}
       </section>
       <section className="book-list">
-        <BookGrid books={books} selectedBook={selectedBook} />
+        <BookGrid books={books} selectedBookId={selectedBookId} />
       </section>
     </main>
   );
