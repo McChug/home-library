@@ -4,3 +4,94 @@
   justify-content: center;
   align-items: center;
 }
+
+.book-detail-split {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+
+.book-detail-cover {
+  height: 27rem;
+  width: 18rem;
+
+  background: #e0e0e0;
+}
+
+.book-detail-cover img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.book-detail-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin: 0;
+}
+
+.book-detail-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.book-detail-group div {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+}
+
+dt {
+  /* TODO: Get font styling in here */
+}
+
+dd {
+  margin: 0;
+}
+
+.book-detail-series-list {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.book-detail-series-current {
+  font-weight: bold;
+}
+
+.book-detail-readthroughs {
+  margin-top: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.book-detail-readthroughs h2 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: normal;
+}
+
+.book-detail-readthrough {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.85rem 1rem;
+  background: #f5f5f5;
+  border-left: 3px solid #ababab;
+  border-radius: 2px;
+}
+
+.book-detail-readthrough div {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  gap: 0.5rem;
+  align-items: baseline;
+}
