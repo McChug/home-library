@@ -10,13 +10,36 @@ function App() {
   const [books, setBooks] = useState<Book[]>(initialBooks);
   const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
+  const selectedBookId = selectedBook?.id ?? null;
+
+  function select(book: Book) {
+    if (book.id === selectedBookId) {
+      setSelectedBook(null);
+    } else {
+      setSelectedBook(book);
+    }
+  }
+
   return (
-    <>
-      <h1>Home Library Catalog</h1>
-      <Search />
-      <BookGrid books={books} />
-      {selectedBook && <BookDetail book={selectedBook} />}
-    </>
+    <main>
+      <section className="content">
+        <h1>Home Library Catalog</h1>
+        <Search />
+        {selectedBook && (
+          <div>
+            <button onClick={() => setSelectedBook(null)}>Back</button>
+            <BookDetail book={selectedBook} />
+          </div>
+        )}
+      </section>
+      <section className="book-list">
+        <BookGrid
+          books={books}
+          select={select}
+          selectedBookId={selectedBookId}
+        />
+      </section>
+    </main>
   );
 }
 

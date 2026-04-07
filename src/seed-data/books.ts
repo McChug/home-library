@@ -10,6 +10,8 @@ export const books: Book[] = [
     kind: "series",
     title: "The Fellowship of the Ring",
     author: "J.R.R. Tolkien",
+    coverUrl:
+      "https://m.media-amazon.com/images/I/71Ep7UNeTtL._AC_UF1000,1000_QL80_.jpg",
     publishedYear: 1954,
     genreIds: ["genre-fantasy"],
     seriesId: SERIES_IDS.LOTR,

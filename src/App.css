@@ -1,0 +1,26 @@
+:root {
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 2rem;
+}
+
+.content {
+  flex: 2;
+}
+
+.book-list {
+  flex: 3;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 2vh 0;
+}

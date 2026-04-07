@@ -1,7 +1,7 @@
-import BindingThumbnail from "../BookThumbnail/BindingThumbnail";
-import type { Book } from "../../types/Book";
+import BindingThumbnail from "../BookThumbnails/BindingThumbnail";
+import type { BookListProps } from "../../types/BookListProps";
 
-function BookStack({ books }: { books: Book[] }) {
+function BookStack({ books, select }: BookListProps) {
   return (
     <div>
       {books.map((book) => (

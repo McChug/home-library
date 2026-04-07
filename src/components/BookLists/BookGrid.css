@@ -1,0 +1,28 @@
+:root {
+  --book-width: 9rem;
+}
+
+.book-grid {
+  display: grid;
+  grid-template-columns: repeat(3, var(--book-width));
+  gap: 1rem;
+
+  overflow-y: hidden;
+}
+
+.cover-thumbnail-wrapper {
+  height: 12rem;
+  width: var(--book-width);
+  padding: 0;
+  border: none;
+
+  overflow-y: hidden;
+}
+
+.cover-thumbnail-wrapper:hover {
+  outline: 1px solid black;
+}
+
+.cover-thumbnail-wrapper.selected {
+  color: white;
+}
