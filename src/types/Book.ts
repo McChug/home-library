@@ -6,7 +6,7 @@ type BaseBook = {
   author: string;
   isbn?: string;
   coverUrl?: string;
-  publishedYear?: number;
+  publishedDate?: Date;
   genreIds: string[];
   userData: {
     ownership: UserBookOwnership;

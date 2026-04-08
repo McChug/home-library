@@ -24,4 +24,4 @@ dist-ssr
 *.sw?
 
 # Development blob storage
-public/book_covers
+public/book-covers

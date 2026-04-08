@@ -1,6 +1,6 @@
 import "./BookDetail.css";
 import { Link } from "react-router";
-import type { Book, Series } from "../types/Book";
+import type { Book } from "../types/Book";
 import { toTitleCase } from "../helpers/ToTitleCase";
 import { EM_DASH } from "../constants";
 import type { BookDetailProps } from "../types/BookDetailProps";
@@ -33,10 +33,16 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
                       <dd>{book.isbn}</dd>
                     </div>
                   )}
-                  {book.publishedYear && (
+                  {book.publishedDate && (
                     <div>
                       <dt>Published</dt>
-                      <dd>{book.publishedYear}</dd>
+                      <dd>
+                        {book.publishedDate.toLocaleDateString(undefined, {
+                          year: "numeric",
+                          month: "long",
+                          day: "numeric",
+                        })}
+                      </dd>
                     </div>
                   )}
                   {book.genreIds.length > 0 && (
