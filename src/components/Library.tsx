@@ -9,8 +9,9 @@ import type { Book } from "../types/Book";
 import BookGrid from "./BookLists/BookGrid";
 import Search from "./Search";
 import BookDetail from "./BookDetail";
-import { useParams } from "react-router";
+import { useMatch, useParams } from "react-router";
 import type { LibraryState } from "../types/State";
+import EditBookDetail from "./EditBookDetail";
 
 const initialLibraryState: LibraryState = {
   books: initialBooks,
@@ -22,6 +23,7 @@ function Library() {
   const [library, setLibrary] = useState<LibraryState>(initialLibraryState);
   const [query, setQuery] = useState<string>("");
   const { bookId } = useParams();
+  const isEditing = useMatch("book/:bookId/edit");
 
   const selectedBook = library.books.find((b) => b.id === bookId) ?? null;
   const selectedBookId = selectedBook?.id ?? null;
@@ -45,18 +47,38 @@ function Library() {
 
   const filterBooks = (s: string) => setQuery(s);
 
+  async function handleSaveBook(updatedBook: Book) {
+    setLibrary((prev) => ({
+      ...prev,
+      books: prev.books.map((b) => (b.id === updatedBook.id ? updatedBook : b)),
+    }));
+  }
+
   return (
     <main>
       <section className="content">
-        <BookDetail
-          book={selectedBook}
-          genres={library.genres}
-          series={
-            selectedSeries && seriesBooks
-              ? { info: selectedSeries, books: seriesBooks }
-              : undefined
-          }
-        />
+        {isEditing ? (
+          <EditBookDetail
+            book={selectedBook}
+            genres={library.genres}
+            series={
+              selectedSeries && seriesBooks
+                ? { info: selectedSeries, books: seriesBooks }
+                : undefined
+            }
+            onSave={handleSaveBook}
+          />
+        ) : (
+          <BookDetail
+            book={selectedBook}
+            genres={library.genres}
+            series={
+              selectedSeries && seriesBooks
+                ? { info: selectedSeries, books: seriesBooks }
+                : undefined
+            }
+          />
+        )}
         <Search filterBooks={filterBooks} />
       </section>
       <section className="book-list">

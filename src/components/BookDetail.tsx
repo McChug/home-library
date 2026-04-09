@@ -10,7 +10,10 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
     <>
       {book ? (
         <div>
-          <Link to="/">Back</Link>
+          <div className="top-bar">
+            <Link to="/">Back</Link>
+            <Link to={`/book/${book.id}/edit`}>Edit</Link>
+          </div>
           <div className="book-detail-split">
             <div className="book-detail-cover">
               {book.coverUrl && <img src={book.coverUrl} alt="" />}

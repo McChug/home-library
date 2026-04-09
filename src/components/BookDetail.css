@@ -1,3 +1,8 @@
+.top-bar {
+  display: flex;
+  gap: 3rem;
+}
+
 .page-title {
   height: 60%;
   display: flex;
