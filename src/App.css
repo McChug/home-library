@@ -12,27 +12,3 @@ main {
   align-items: flex-start;
   gap: 2rem;
 }
-
-.content {
-  flex: 3;
-
-  position: sticky;
-  top: 0;
-  padding-top: 2rem;
-  padding-bottom: 4rem;
-  height: calc(100vh - 6rem);
-  overflow-y: auto;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.book-list {
-  flex: 2;
-
-  display: flex;
-  justify-content: center;
-
-  padding: 2vh 0;
-}
