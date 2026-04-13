@@ -5,10 +5,16 @@ import { toTitleCase } from "../helpers/ToTitleCase";
 import { EM_DASH } from "../constants";
 import type { BookDetailProps } from "../types/BookDetailProps";
 
+// Claude assisted with generating a defition list structure that I built off of
 function BookDetail({ book, genres, series }: BookDetailProps) {
   return (
     <>
-      {book ? (
+      {!book ? (
+        <div className="page-title">
+          <h1>Home Library Catalog</h1>
+          <Link to={"/book/add"}>Add New Book</Link>
+        </div>
+      ) : (
         <div>
           <div className="top-bar">
             <Link to="/">Back</Link>
@@ -54,7 +60,6 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
                       <dd>
                         {book.genreIds
                           .map((id) => genres.find((g) => g.id === id)?.name)
-                          .filter(Boolean)
                           .join(", ")}
                       </dd>
                     </div>
@@ -144,10 +149,6 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
                 )}
             </div>
           </div>
-        </div>
-      ) : (
-        <div className="page-title">
-          <h1>Home Library Catalog</h1>
         </div>
       )}
     </>

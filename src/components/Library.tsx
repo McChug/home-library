@@ -23,7 +23,10 @@ function Library() {
   const [library, setLibrary] = useState<LibraryState>(initialLibraryState);
   const [query, setQuery] = useState<string>("");
   const { bookId } = useParams();
-  const isEditing = useMatch("book/:bookId/edit");
+
+  const editMatch = useMatch("/book/:bookId/edit");
+  const addMatch = useMatch("/book/add");
+  const isEditing = Boolean(editMatch || addMatch);
 
   const selectedBook = library.books.find((b) => b.id === bookId) ?? null;
   const selectedBookId = selectedBook?.id ?? null;

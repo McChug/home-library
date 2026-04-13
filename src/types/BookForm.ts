@@ -1,3 +1,6 @@
+// I used Claude to help architect my EditBookDetail component and these
+// types are adapted from its output
+
 export type FormOwnershipKind = "unowned" | "physical" | "digital";
 
 export interface BookFormFields {
@@ -36,5 +39,4 @@ export type BookFormAction =
   | { type: "SET_OWNERSHIP_KIND"; kind: FormOwnershipKind }
   | { type: "SUBMIT" }
   | { type: "SAVE_SUCCESS" }
-  | { type: "SAVE_ERROR"; message: string }
-  | { type: "RESET"; fields: BookFormFields };
+  | { type: "SAVE_ERROR"; message: string };
