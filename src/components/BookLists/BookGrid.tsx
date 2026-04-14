@@ -1,6 +1,6 @@
 import "./BookGrid.css";
 import CoverThumbnail from "../BookThumbnails/CoverThumbnail";
-import type { BookListProps } from "../../types/BookListProps";
+import type { BookListProps } from "../../types/bookListProps";
 import { Link } from "react-router";
 
 function BookGrid({ books, selectedBookId }: BookListProps) {

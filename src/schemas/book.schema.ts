@@ -12,7 +12,8 @@ const ReadthroughSchema = z.object({
 
 const UserBookOwnershipSchema = z.discriminatedUnion("kind", [
   z.object({ kind: z.literal("unowned") }),
-  z.object({ kind: z.literal("physical") }),
+  z.object({ kind: z.literal("hardcover") }),
+  z.object({ kind: z.literal("paperback") }),
   z.object({
     kind: z.literal("digital"),
     platform: z.string(),

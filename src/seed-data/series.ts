@@ -1,4 +1,4 @@
-import type { Series } from "../types/Book";
+import type { Series } from "../types/book";
 
 export const series: Series[] = [
   { id: "series-lotr", name: "The Lord of the Rings" },

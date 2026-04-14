@@ -1,5 +1,5 @@
 import BindingThumbnail from "../BookThumbnails/BindingThumbnail";
-import type { BookListProps } from "../../types/BookListProps";
+import type { BookListProps } from "../../types/bookListProps";
 
 function BookStack({ books, selectedBookId }: BookListProps) {
   return (

@@ -1,4 +1,4 @@
-import type { Book } from "../types/Book";
+import type { Book } from "../schemas/book.schema";
 import { SERIES_IDS } from "./series";
 
 export const books: Book[] = [
@@ -10,13 +10,12 @@ export const books: Book[] = [
     kind: "series",
     title: "The Fellowship of the Ring",
     author: "J.R.R. Tolkien",
-    coverUrl: "/book-covers/book-fellowship.jpg",
     publishedDate: new Date("1954-07-29"),
     genreIds: ["genre-fantasy"],
     seriesId: SERIES_IDS.LOTR,
     seriesOrder: 1,
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [
         { finishedAt: new Date("2021-03-14"), rating: 5 },
         {
@@ -33,13 +32,12 @@ export const books: Book[] = [
     kind: "series",
     title: "The Two Towers",
     author: "J.R.R. Tolkien",
-    coverUrl: "/book-covers/book-two-towers.png",
     publishedDate: new Date("1954-11-11"),
     genreIds: ["genre-fantasy"],
     seriesId: SERIES_IDS.LOTR,
     seriesOrder: 2,
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [{ finishedAt: new Date("2021-04-02"), rating: 5 }],
     },
   },
@@ -47,14 +45,13 @@ export const books: Book[] = [
     id: "book-return-of-the-king",
     kind: "series",
     title: "The Return of the King",
-    coverUrl: "/book-covers/book-return-of-the-king.png",
     author: "J.R.R. Tolkien",
     publishedDate: new Date("1955-10-20"),
     genreIds: ["genre-fantasy"],
     seriesId: SERIES_IDS.LOTR,
     seriesOrder: 3,
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [{ finishedAt: new Date("2021-04-20"), rating: 5 }],
     },
   },
@@ -67,7 +64,6 @@ export const books: Book[] = [
     kind: "series",
     title: "The Way of Kings",
     author: "Brandon Sanderson",
-    coverUrl: "/book-covers/book-way-of-kings.png",
     publishedDate: new Date("2010-08-31"),
     genreIds: ["genre-fantasy"],
     seriesId: SERIES_IDS.STORMLIGHT,
@@ -138,7 +134,7 @@ export const books: Book[] = [
     seriesId: SERIES_IDS.EXPANSE,
     seriesOrder: 1,
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [
         {
           finishedAt: new Date("2020-06-18"),
@@ -158,7 +154,7 @@ export const books: Book[] = [
     seriesId: SERIES_IDS.EXPANSE,
     seriesOrder: 2,
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [{ finishedAt: new Date("2020-08-04"), rating: 4 }],
     },
   },
@@ -172,7 +168,7 @@ export const books: Book[] = [
     seriesId: SERIES_IDS.EXPANSE,
     seriesOrder: 3,
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
     },
   },
 
@@ -222,7 +218,6 @@ export const books: Book[] = [
     kind: "standalone",
     title: "Project Hail Mary",
     author: "Andy Weir",
-    coverUrl: "/book-covers/book-project-hail-mary.png",
     publishedDate: new Date("2021-05-04"),
     genreIds: ["genre-sci-fi"],
     userData: {
@@ -244,7 +239,7 @@ export const books: Book[] = [
     publishedDate: new Date("2020-09-15"),
     genreIds: ["genre-fantasy", "genre-mystery"],
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [{ finishedAt: new Date("2022-01-07"), rating: 5 }],
       notes: "A gift from my sister.",
     },
@@ -257,7 +252,7 @@ export const books: Book[] = [
     publishedDate: new Date("2012-06-05"),
     genreIds: ["genre-thriller", "genre-mystery"],
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [
         {
           finishedAt: new Date("2019-07-22"),
@@ -275,7 +270,7 @@ export const books: Book[] = [
     publishedDate: new Date("2021-10-05"),
     genreIds: ["genre-historical-fiction", "genre-literary-fiction"],
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [{ finishedAt: new Date("2023-05-30"), rating: 4 }],
     },
   },
@@ -317,7 +312,7 @@ export const books: Book[] = [
     publishedDate: new Date("2011-01-01"), // Original Hebrew publication year
     genreIds: ["genre-nonfiction", "genre-biography"],
     userData: {
-      ownership: { kind: "physical" },
+      ownership: { kind: "hardcover" },
       readthroughs: [{ finishedAt: new Date("2020-01-15"), rating: 4 }],
       notes: "Lent to a friend, haven't gotten it back.",
     },

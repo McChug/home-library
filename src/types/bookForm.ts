@@ -1,7 +1,11 @@
 // I used Claude to help architect my EditBookDetail component and these
 // types are adapted from its output
 
-export type FormOwnershipKind = "unowned" | "physical" | "digital";
+export type FormOwnershipKind =
+  | "unowned"
+  | "hardcover"
+  | "paperback"
+  | "digital";
 
 export interface BookFormFields {
   title: string;
@@ -46,6 +50,7 @@ export type BookFormAction =
   | { type: "SET_GENRES"; value: string[] }
   | { type: "SET_OWNERSHIP_KIND"; kind: FormOwnershipKind }
   | { type: "SET_COVER_IMAGE"; file: File | null; previewUrl: string | null }
+  | { type: "POPULATE_FROM_FETCH"; payload: Partial<BookFormFields> }
   | { type: "SUBMIT" }
   | { type: "SAVE_SUCCESS" }
   | { type: "SAVE_ERROR"; message: string };

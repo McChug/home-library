@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import type { Book } from "../schemas/book.schema";
 import { toTitleCase } from "../helpers/ToTitleCase";
 import { EM_DASH } from "../constants";
-import type { BookDetailProps } from "../types/BookDetailProps";
+import type { BookDetailProps } from "../types/bookDetailProps";
 import { useBookCover } from "../hooks/useBookCover";
 
 // Claude assisted with generating a defition list structure that I built off of

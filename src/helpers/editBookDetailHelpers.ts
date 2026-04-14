@@ -1,5 +1,5 @@
 import type { Book, UserBookOwnership } from "../schemas/book.schema";
-import type { BookFormErrors, BookFormFields } from "../types/BookForm";
+import type { BookFormErrors, BookFormFields } from "../types/bookForm";
 import { toSlug, uniqueSlug } from "./slug";
 import type { Library, Series } from "../schemas/library.schema";
 

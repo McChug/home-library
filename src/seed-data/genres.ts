@@ -1,4 +1,4 @@
-import type { Genre } from "../types/Book";
+import type { Genre } from "../types/book";
 
 export const genres: Genre[] = [
   { id: "genre-fantasy", name: "Fantasy" },
