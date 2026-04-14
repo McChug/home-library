@@ -1,5 +1,9 @@
 import React, { useReducer } from "react";
-import { bookToFields, validate } from "../helpers/EditBookDetailHelpers";
+import {
+  bookToFields,
+  fieldsToBook,
+  validate,
+} from "../helpers/editBookDetailHelpers";
 import type {
   BookFormAction,
   BookFormFields,
@@ -73,7 +77,7 @@ function reducer(state: BookFormState, action: BookFormAction): BookFormState {
   }
 }
 
-function EditBookDetail({ book, genres, series, onSave }: EditBookDetailProps) {
+function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
   const initialFields = bookToFields(book);
 
   const [state, dispatch] = useReducer(reducer, {
@@ -82,6 +86,7 @@ function EditBookDetail({ book, genres, series, onSave }: EditBookDetailProps) {
     errors: {},
   });
 
+  const { genres, series } = library;
   const { fields, errors, status } = state;
   const isSaving = status === "saving";
 
@@ -96,6 +101,34 @@ function EditBookDetail({ book, genres, series, onSave }: EditBookDetailProps) {
   async function handleSubmit(e: React.SubmitEvent) {
     e.preventDefault();
     dispatch({ type: "SUBMIT" });
+
+    const errors = validate(fields);
+    if (Object.keys(errors).length > 0) {
+      return;
+    }
+
+    try {
+      const { book: updatedBook, newSeries } = fieldsToBook(
+        book,
+        fields,
+        library,
+      );
+
+      const coverBlob = fields.coverImage
+        ? new Blob([await fields.coverImage.arrayBuffer()], {
+            type: fields.coverImage.type,
+          })
+        : null;
+
+      onSave(updatedBook, newSeries, coverBlob);
+
+      dispatch({ type: "SAVE_SUCCESS" });
+    } catch (err) {
+      dispatch({
+        type: "SAVE_ERROR",
+        message: err instanceof Error ? err.message : "Save failed",
+      });
+    }
   }
 
   function handleCoverChange(e: React.ChangeEvent<HTMLInputElement>) {

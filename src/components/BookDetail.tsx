@@ -1,12 +1,15 @@
 import "./BookDetail.css";
 import { Link } from "react-router";
-import type { Book } from "../types/Book";
+import type { Book } from "../schemas/book.schema";
 import { toTitleCase } from "../helpers/ToTitleCase";
 import { EM_DASH } from "../constants";
 import type { BookDetailProps } from "../types/BookDetailProps";
+import { useBookCover } from "../hooks/useBookCover";
 
 // Claude assisted with generating a defition list structure that I built off of
 function BookDetail({ book, genres, series }: BookDetailProps) {
+  const coverUrl = useBookCover(book?.id ?? "");
+
   return (
     <>
       {!book ? (
@@ -22,7 +25,7 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
           </div>
           <div className="book-detail-split">
             <div className="book-detail-cover">
-              {book.coverUrl && <img src={book.coverUrl} alt="" />}
+              {coverUrl && <img src={coverUrl} alt="" />}
             </div>
 
             <div>

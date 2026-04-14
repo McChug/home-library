@@ -4,5 +4,5 @@ import type { Genre, Series } from "../schemas/library.schema.ts";
 export interface BookDetailProps {
   book: Book | null;
   genres: Genre[];
-  series: Series[];
+  series?: { info: Series; books: Book[] };
 }

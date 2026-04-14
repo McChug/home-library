@@ -1,12 +1,19 @@
 import { useEffect, useState } from "react";
-import type { Library } from "../schemas/library.schema";
+import type { Library, Series } from "../schemas/library.schema";
 import { loadLibrary, saveLibrary } from "../storage/libraryStorage";
 import type { Book } from "../schemas/book.schema";
 import { saveCover } from "../storage/coverStorage";
 
 export function useLibrary(
   inititalLibrary: Library,
-): [Library, (updatedBook: Book, coverBlob?: Blob) => Promise<void>] {
+): [
+  Library,
+  (
+    updatedBook: Book,
+    newSeries: Series | null,
+    coverBlob: Blob | null,
+  ) => Promise<void>,
+] {
   const [library, setLibrary] = useState<Library>(
     () => loadLibrary() ?? inititalLibrary,
   );
@@ -15,7 +22,11 @@ export function useLibrary(
     saveLibrary(library);
   }, [library]);
 
-  async function handleSaveBook(updatedBook: Book, coverBlob?: Blob) {
+  async function handleSaveBook(
+    updatedBook: Book,
+    newSeries: Series | null,
+    coverBlob: Blob | null,
+  ) {
     if (coverBlob) {
       await saveCover(updatedBook.id, coverBlob);
     }
@@ -27,7 +38,12 @@ export function useLibrary(
         ? prev.books.map((b) => (b.id === updatedBook.id ? updatedBook : b))
         : [...prev.books, updatedBook];
 
-      return { ...prev, books: updatedBooks };
+      const updatedSeries =
+        newSeries && !prev.series.some((s) => s.id === newSeries.id)
+          ? [...prev.series, newSeries]
+          : prev.series;
+
+      return { ...prev, books: updatedBooks, series: updatedSeries };
     });
   }
 

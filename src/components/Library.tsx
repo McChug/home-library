@@ -34,6 +34,19 @@ function Library() {
   const selectedBook = library.books.find((b) => b.id === bookId) ?? null;
   const selectedBookId = selectedBook?.id ?? null;
 
+  const selectedSeries: Series | undefined =
+    selectedBook?.kind === "series"
+      ? library.series.find((s) => s.id === selectedBook.seriesId)
+      : undefined;
+
+  const seriesBooks: Book[] =
+    selectedBook?.kind === "series"
+      ? library.books.filter(
+          (b): b is Extract<Book, { kind: "series" }> =>
+            b.kind === "series" && b.seriesId === selectedBook.seriesId,
+        )
+      : [];
+
   const filteredBooks = library.books.filter((b) =>
     b.title.toLowerCase().includes(query.toLowerCase()),
   );
@@ -46,15 +59,18 @@ function Library() {
         {isEditing ? (
           <EditBookDetail
             book={selectedBook}
-            genres={library.genres}
-            series={library.series}
+            library={library}
             onSave={handleSaveBook}
           />
         ) : (
           <BookDetail
             book={selectedBook}
             genres={library.genres}
-            series={library.series}
+            series={
+              selectedSeries && seriesBooks
+                ? { info: selectedSeries, books: seriesBooks }
+                : undefined
+            }
           />
         )}
         <Search filterBooks={filterBooks} />

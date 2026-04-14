@@ -5,6 +5,8 @@ export function useBookCover(bookId: string) {
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!bookId) return;
+
     let isActive = true;
     let objectUrl: string | null = null;
 
