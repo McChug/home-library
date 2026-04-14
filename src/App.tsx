@@ -1,8 +1,8 @@
 import "./App.css";
-import Library from "./components/Library";
+import LibraryApp from "./components/LibraryApp";
 
 function App() {
-  return <Library />;
+  return <LibraryApp />;
 }
 
 export default App;

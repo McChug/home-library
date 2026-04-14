@@ -1,9 +1,5 @@
 import React, { useReducer, useState } from "react";
-import {
-  bookToFields,
-  fieldsToBook,
-  validate,
-} from "../helpers/editBookDetailHelpers";
+import { bookToFields, fieldsToBook, validate } from "./editBookDetailHelpers";
 import type {
   BookFormAction,
   BookFormFields,
@@ -17,7 +13,7 @@ import type { AsyncState, FetchAction } from "../types/fetch";
 import { fetchJsonUnkown, formatFetchError } from "../api/fetchJsonUnknown";
 import { OPENBOOK_API_URL } from "../constants";
 import type { BookDto } from "../schemas/dto.schema";
-import { bookDtoToPayload, parseBookDto } from "../helpers/bookDto";
+import { bookDtoToPayload, parseBookDto } from "../api/bookDto";
 
 function assertNever(x: never): never {
   throw new Error(`Unexpected case: ${JSON.stringify(x)}`);

@@ -1,7 +1,7 @@
 import "./BookDetail.css";
 import { Link } from "react-router";
 import type { Book } from "../schemas/book.schema";
-import { toTitleCase } from "../helpers/ToTitleCase";
+import { toTitleCase } from "../utils/toTitleCase";
 import { EM_DASH } from "../constants";
 import type { BookDetailProps } from "../types/bookDetailProps";
 import { useBookCover } from "../hooks/useBookCover";

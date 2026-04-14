@@ -1,6 +1,6 @@
 import "./CoverThumbnail.css";
-import type { Book } from "../../schemas/book.schema";
-import { useBookCover } from "../../hooks/useBookCover";
+import type { Book } from "../schemas/book.schema";
+import { useBookCover } from "../hooks/useBookCover";
 
 function CoverThumbnail({ book }: { book: Book }) {
   const coverUrl = useBookCover(book?.id ?? "");

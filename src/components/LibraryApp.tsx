@@ -1,19 +1,19 @@
 import { useState } from "react";
-import "./Library.css";
+import "./LibraryApp.css";
 // import {
 //   books as seedBooks,
 //   series as seedSeries,
 //   genres as seedGenres,
 // } from "../seed-data";
 import type { Book } from "../schemas/book.schema";
-import BookGrid from "./BookLists/BookGrid";
+import BookGrid from "./BookGrid";
 import Search from "./Search";
 import BookDetail from "./BookDetail";
 import { useMatch, useParams } from "react-router";
 import EditBookDetail from "./EditBookDetail";
 import { useLibrary } from "../hooks/useLibrary";
 import { DEFAULT_LIBRARY } from "../constants";
-import type { Library, Series } from "../schemas/library.schema";
+import type { Series } from "../schemas/library.schema";
 
 // const seedLibrary: Library = {
 //   books: seedBooks,
@@ -21,7 +21,7 @@ import type { Library, Series } from "../schemas/library.schema";
 //   series: seedSeries,
 // };
 
-function Library() {
+function LibraryApp() {
   const [library, handleSaveBook] = useLibrary(DEFAULT_LIBRARY);
   // const [library, handleSaveBook] = useLibrary(seedLibrary); // seed data for testing
   const [query, setQuery] = useState<string>("");
@@ -82,4 +82,4 @@ function Library() {
   );
 }
 
-export default Library;
+export default LibraryApp;
