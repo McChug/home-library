@@ -1,4 +1,3 @@
-import { useBookCover } from "../hooks/useBookCover";
 import type { Book, UserBookOwnership } from "../schemas/book.schema";
 import type { BookFormErrors, BookFormFields } from "../types/BookForm";
 import { toSlug, uniqueSlug } from "./slug";
@@ -25,13 +24,11 @@ export function bookToFields(book: Book | null): BookFormFields {
     };
   }
 
-  const existingCoverUrl = useBookCover(book?.id ?? "");
-
   return {
     title: book.title,
     author: book.author,
     isbn: book.isbn ?? "",
-    coverPreviewUrl: existingCoverUrl,
+    coverPreviewUrl: null,
     coverImage: null,
     publishedDate: book.publishedDate
       ? book.publishedDate.toISOString().slice(0, 10)

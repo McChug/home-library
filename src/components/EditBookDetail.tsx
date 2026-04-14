@@ -12,6 +12,7 @@ import type {
 } from "../types/BookForm";
 import type { EditBookDetailProps } from "../types/EditBookDetailProps";
 import { Link } from "react-router";
+import { useBookCover } from "../hooks/useBookCover";
 
 function assertNever(x: never): never {
   throw new Error(`Unexpected case: ${JSON.stringify(x)}`);
@@ -79,6 +80,7 @@ function reducer(state: BookFormState, action: BookFormAction): BookFormState {
 
 function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
   const initialFields = bookToFields(book);
+  const existingCoverUrl = useBookCover(book?.id ?? "");
 
   const [state, dispatch] = useReducer(reducer, {
     status: "editing",
@@ -89,6 +91,8 @@ function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
   const { genres, series } = library;
   const { fields, errors, status } = state;
   const isSaving = status === "saving";
+
+  const displayCoverUrl = fields.coverPreviewUrl ?? existingCoverUrl;
 
   function setField(field: keyof BookFormFields) {
     return (
@@ -168,9 +172,7 @@ function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
 
       <div className="book-detail-split">
         <div className="book-detail-cover">
-          {fields.coverPreviewUrl && (
-            <img src={fields.coverPreviewUrl} alt="" />
-          )}
+          {displayCoverUrl && <img src={displayCoverUrl} alt="" />}
           <div className="book-detail-cover-edit">
             <label htmlFor="edit-cover">Change Cover Image</label>
             <input
@@ -395,6 +397,7 @@ function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
             <button type="submit" disabled={isSaving}>
               {isSaving ? "Saving…" : "Save"}
             </button>
+            {status === "success" && <p>Successfully Saved!</p>}
           </div>
         </div>
       </div>
