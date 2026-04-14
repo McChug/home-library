@@ -454,7 +454,8 @@ function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
                     disabled={isSaving}
                   >
                     <option value="unowned">Unowned</option>
-                    <option value="physical">Physical</option>
+                    <option value="hardcover">Hardcover</option>
+                    <option value="paperback">Paperback</option>
                     <option value="digital">Digital</option>
                   </select>
                 </div>
