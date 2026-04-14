@@ -1,47 +1,49 @@
-export type Book = StandaloneBook | SeriesBook;
+// Deprecated after zod, preserving temporarily
 
-type BaseBook = {
-  id: string;
-  title: string;
-  author: string;
-  isbn?: string;
-  coverUrl?: string;
-  publishedDate?: Date;
-  genreIds: string[];
-  userData: {
-    ownership: UserBookOwnership;
-    readthroughs?: Readthrough[];
-    notes?: string;
-  };
-};
+// export type Book = StandaloneBook | SeriesBook;
 
-type UserBookOwnership =
-  | { kind: "unowned" }
-  | { kind: "physical" }
-  | { kind: "digital"; platform: string };
+// type BaseBook = {
+//   id: string;
+//   title: string;
+//   author: string;
+//   isbn?: string;
+//   coverUrl?: string;
+//   publishedDate?: Date;
+//   genreIds: string[];
+//   userData: {
+//     ownership: UserBookOwnership;
+//     readthroughs?: Readthrough[];
+//     notes?: string;
+//   };
+// };
 
-type StandaloneBook = BaseBook & {
-  kind: "standalone";
-};
+// type UserBookOwnership =
+//   | { kind: "unowned" }
+//   | { kind: "physical" }
+//   | { kind: "digital"; platform: string };
 
-type SeriesBook = BaseBook & {
-  kind: "series";
-  seriesId: string;
-  seriesOrder: number;
-};
+// type StandaloneBook = BaseBook & {
+//   kind: "standalone";
+// };
 
-export type Genre = {
-  id: string;
-  name: string;
-};
+// type SeriesBook = BaseBook & {
+//   kind: "series";
+//   seriesId: string;
+//   seriesOrder: number;
+// };
 
-type Readthrough = {
-  finishedAt: Date;
-  rating?: number;
-  notes?: string;
-};
+// export type Genre = {
+//   id: string;
+//   name: string;
+// };
 
-export type Series = {
-  id: string;
-  name: string;
-};
+// type Readthrough = {
+//   finishedAt: Date;
+//   rating?: number;
+//   notes?: string;
+// };
+
+// export type Series = {
+//   id: string;
+//   name: string;
+// };

@@ -1,26 +1,29 @@
 import { useState } from "react";
 import "./Library.css";
 import {
-  books as initialBooks,
-  series as initialSeries,
-  genres as initialGenres,
+  books as seedBooks,
+  series as seedSeries,
+  genres as seedGenres,
 } from "../seed-data";
-import type { Book } from "../types/Book";
+import type { Book } from "../schemas/book.schema";
 import BookGrid from "./BookLists/BookGrid";
 import Search from "./Search";
 import BookDetail from "./BookDetail";
 import { useMatch, useParams } from "react-router";
-import type { LibraryState } from "../types/State";
 import EditBookDetail from "./EditBookDetail";
+import { useLibrary } from "../hooks/useLibrary";
+import { DEFAULT_LIBRARY } from "../constants";
+import type { Library } from "../schemas/library.schema";
 
-const initialLibraryState: LibraryState = {
-  books: initialBooks,
-  series: initialSeries,
-  genres: initialGenres,
+const seedLibrary: Library = {
+  books: seedBooks,
+  genres: seedGenres,
+  series: seedSeries,
 };
 
 function Library() {
-  const [library, setLibrary] = useState<LibraryState>(initialLibraryState);
+  // const [library, handleSaveBook] = useLibrary(DEFAULT_LIBRARY);
+  const [library, handleSaveBook] = useLibrary(seedLibrary); // seed data for testing
   const [query, setQuery] = useState<string>("");
   const { bookId } = useParams();
 
@@ -49,13 +52,6 @@ function Library() {
   );
 
   const filterBooks = (s: string) => setQuery(s);
-
-  async function handleSaveBook(updatedBook: Book) {
-    setLibrary((prev) => ({
-      ...prev,
-      books: prev.books.map((b) => (b.id === updatedBook.id ? updatedBook : b)),
-    }));
-  }
 
   return (
     <main>

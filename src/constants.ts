@@ -1,1 +1,15 @@
+import type { Library } from "./schemas/library.schema";
+
 export const EM_DASH = "—";
+
+export const LIBRARY_KEY = "library";
+
+export const DB_NAME = "book-covers";
+export const STORE_NAME = "cover";
+export const DB_VERSION = 1;
+
+export const DEFAULT_LIBRARY: Library = {
+  books: [],
+  genres: [],
+  series: [],
+};

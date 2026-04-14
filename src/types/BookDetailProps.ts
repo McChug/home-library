@@ -1,4 +1,5 @@
-import type { Book, Genre, Series } from "./Book";
+import type { Book } from "../schemas/book.schema.ts";
+import type { Genre, Series } from "../schemas/library.schema.ts";
 
 export interface BookDetailProps {
   book: Book | null;
