@@ -4,6 +4,6 @@ import type { Genre, Series } from "../schemas/library.schema.ts";
 export interface EditBookDetailProps {
   book: Book | null;
   genres: Genre[];
-  series?: { info: Series; books: Book[] };
+  series: Series[];
   onSave: (book: Book) => void;
 }

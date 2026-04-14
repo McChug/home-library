@@ -24,7 +24,7 @@ const BaseBookSchema = z.object({
   title: z.string(),
   author: z.string(),
   isbn: z.string().optional(),
-  coverUrl: z.string().optional(),
+  // coverUrl: z.string().optional(),
   publishedDate: DateFromString.optional(),
   genreIds: z.array(z.string()),
   userData: z.object({

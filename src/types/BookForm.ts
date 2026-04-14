@@ -7,22 +7,29 @@ export interface BookFormFields {
   title: string;
   author: string;
   isbn: string;
-  coverUrl: string;
+  coverImage: File | null;
+  coverPreviewUrl: string | null;
   publishedDate: string;
   ownershipKind: FormOwnershipKind;
   ownershipPlatform: string;
   notes: string;
-  // genreIds to be implemented
-  // series fields to be implemented
+  genreIds: string[];
+  seriesId: string;
+  seriesOrder: string;
+  seriesNewName: string;
 }
 
 export interface BookFormErrors {
   title?: string;
   author?: string;
   isbn?: string;
-  coverUrl?: string;
+  coverImage?: string;
   publishedDate?: string;
   ownershipPlatform?: string;
+  genreIds?: string;
+  seriesId?: string;
+  seriesOrder?: string;
+  seriesNewName?: string;
 }
 
 export type BookFormStatus = "editing" | "saving" | "success" | "error";
@@ -36,7 +43,9 @@ export interface BookFormState {
 
 export type BookFormAction =
   | { type: "SET_FIELD"; field: keyof BookFormFields; value: string }
+  | { type: "SET_GENRES"; value: string[] }
   | { type: "SET_OWNERSHIP_KIND"; kind: FormOwnershipKind }
+  | { type: "SET_COVER_IMAGE"; file: File | null; previewUrl: string | null }
   | { type: "SUBMIT" }
   | { type: "SAVE_SUCCESS" }
   | { type: "SAVE_ERROR"; message: string };

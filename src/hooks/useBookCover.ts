@@ -5,16 +5,22 @@ export function useBookCover(bookId: string) {
   const [coverUrl, setCoverUrl] = useState<string | null>(null);
 
   useEffect(() => {
+    let isActive = true;
     let objectUrl: string | null = null;
 
     async function fetchCover() {
-      objectUrl = await loadCover(bookId);
+      const url = await loadCover(bookId);
+
+      if (!isActive) return;
+
+      objectUrl = url;
       setCoverUrl(objectUrl);
     }
 
     fetchCover();
 
     return () => {
+      isActive = false;
       if (objectUrl) URL.revokeObjectURL(objectUrl);
     };
   }, [bookId]);
