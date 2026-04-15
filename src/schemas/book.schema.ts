@@ -11,7 +11,7 @@ const ReadthroughSchema = z.object({
 });
 
 const UserBookOwnershipSchema = z.discriminatedUnion("kind", [
-  z.object({ kind: z.literal("unowned") }),
+  z.object({ kind: z.literal("wishlist") }),
   z.object({ kind: z.literal("hardcover") }),
   z.object({ kind: z.literal("paperback") }),
   z.object({

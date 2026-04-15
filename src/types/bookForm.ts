@@ -2,7 +2,7 @@
 // types are adapted from its output
 
 export type FormOwnershipKind =
-  | "unowned"
+  | "wishlist"
   | "hardcover"
   | "paperback"
   | "digital";
