@@ -14,7 +14,9 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
     <>
       {!book ? (
         <div className="page-title">
-          <h1>Home Library Catalog</h1>
+          <h1 className="logo-heading">
+            <img src="/logo.svg" width="400" alt="Home Library Catalog" />
+          </h1>
           <Link to={"/book/add"}>Add New Book</Link>
         </div>
       ) : (
