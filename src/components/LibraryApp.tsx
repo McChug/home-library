@@ -1,10 +1,10 @@
 import { useState } from "react";
 import "./LibraryApp.css";
-// import {
-//   books as seedBooks,
-//   series as seedSeries,
-//   genres as seedGenres,
-// } from "../seed-data";
+import {
+  books as seedBooks,
+  series as seedSeries,
+  genres as seedGenres,
+} from "../fixtures";
 import type { Book } from "../schemas/book.schema";
 import BookGrid from "./BookGrid";
 import Search from "./Search";
@@ -13,18 +13,20 @@ import { useMatch, useParams } from "react-router";
 import EditBookDetail from "./EditBookDetail/EditBookDetail";
 import { useLibrary } from "../hooks/useLibrary";
 import { DEFAULT_LIBRARY } from "../constants";
-import type { Series } from "../schemas/library.schema";
+import type { Library, Series } from "../schemas/library.schema";
 
-// const seedLibrary: Library = {
-//   books: seedBooks,
-//   genres: seedGenres,
-//   series: seedSeries,
-// };
+const seedLibrary: Library = {
+  books: seedBooks,
+  genres: seedGenres,
+  series: seedSeries,
+};
+
+const devMode = true;
+const starterLibrary = devMode ? seedLibrary : DEFAULT_LIBRARY;
 
 function LibraryApp() {
   const [library, handleSaveBook, handleDeleteBook] =
-    useLibrary(DEFAULT_LIBRARY);
-  // const [library, handleSaveBook] = useLibrary(seedLibrary); // seed data for testing
+    useLibrary(starterLibrary);
   const [query, setQuery] = useState<string>("");
   const { bookId } = useParams();
 

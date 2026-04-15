@@ -95,7 +95,7 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
                                     b.id === book.id ? "page" : undefined
                                   }
                                 >
-                                  {b.title}
+                                  {`${b.seriesOrder}. ${b.title}`}
                                 </li>
                               ))}
                           </ol>
