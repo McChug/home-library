@@ -1,3 +1,4 @@
+import { genres } from "./fixtures";
 import type { Library } from "./schemas/library.schema";
 
 export const EM_DASH = "—";
@@ -10,7 +11,7 @@ export const DB_VERSION = 1;
 
 export const DEFAULT_LIBRARY: Library = {
   books: [],
-  genres: [],
+  genres: genres,
   series: [],
 };
 

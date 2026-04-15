@@ -10,7 +10,7 @@ import BookGrid from "./BookGrid";
 import Search from "./Search";
 import BookDetail from "./BookDetail";
 import { useMatch, useParams } from "react-router";
-import EditBookDetail from "./EditBookDetail";
+import EditBookDetail from "./EditBookDetail/EditBookDetail";
 import { useLibrary } from "../hooks/useLibrary";
 import { DEFAULT_LIBRARY } from "../constants";
 import type { Series } from "../schemas/library.schema";

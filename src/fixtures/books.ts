@@ -6,7 +6,7 @@ export const books: Book[] = [
   // The Lord of the Rings (series)
   // -----------------------------------------------------------------------
   {
-    id: "book-fellowship",
+    id: "fellowship",
     kind: "series",
     title: "The Fellowship of the Ring",
     author: "J.R.R. Tolkien",
@@ -28,7 +28,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-two-towers",
+    id: "two-towers",
     kind: "series",
     title: "The Two Towers",
     author: "J.R.R. Tolkien",
@@ -42,7 +42,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-return-of-the-king",
+    id: "return-of-the-king",
     kind: "series",
     title: "The Return of the King",
     author: "J.R.R. Tolkien",
@@ -60,7 +60,7 @@ export const books: Book[] = [
   // The Stormlight Archive (series)
   // -----------------------------------------------------------------------
   {
-    id: "book-way-of-kings",
+    id: "way-of-kings",
     kind: "series",
     title: "The Way of Kings",
     author: "Brandon Sanderson",
@@ -80,7 +80,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-words-of-radiance",
+    id: "words-of-radiance",
     kind: "series",
     title: "Words of Radiance",
     author: "Brandon Sanderson",
@@ -94,7 +94,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-oathbringer",
+    id: "oathbringer",
     kind: "series",
     title: "Oathbringer",
     author: "Brandon Sanderson",
@@ -108,7 +108,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-rhythm-of-war",
+    id: "rhythm-of-war",
     kind: "series",
     title: "Rhythm of War",
     author: "Brandon Sanderson",
@@ -125,7 +125,7 @@ export const books: Book[] = [
   // The Expanse (series)
   // -----------------------------------------------------------------------
   {
-    id: "book-leviathan-wakes",
+    id: "leviathan-wakes",
     kind: "series",
     title: "Leviathan Wakes",
     author: "James S.A. Corey",
@@ -145,7 +145,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-caliban-war",
+    id: "caliban-war",
     kind: "series",
     title: "Caliban's War",
     author: "James S.A. Corey",
@@ -159,7 +159,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-abaddons-gate",
+    id: "abaddons-gate",
     kind: "series",
     title: "Abaddon's Gate",
     author: "James S.A. Corey",
@@ -176,7 +176,7 @@ export const books: Book[] = [
   // The Broken Earth (series)
   // -----------------------------------------------------------------------
   {
-    id: "book-fifth-season",
+    id: "fifth-season",
     kind: "series",
     title: "The Fifth Season",
     author: "N.K. Jemisin",
@@ -197,7 +197,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-obelisk-gate",
+    id: "obelisk-gate",
     kind: "series",
     title: "The Obelisk Gate",
     author: "N.K. Jemisin",
@@ -206,7 +206,7 @@ export const books: Book[] = [
     seriesId: SERIES_IDS.BROKEN_EARTH,
     seriesOrder: 2,
     userData: {
-      ownership: { kind: "unowned" },
+      ownership: { kind: "wishlist" },
     },
   },
 
@@ -214,7 +214,7 @@ export const books: Book[] = [
   // Standalone books
   // -----------------------------------------------------------------------
   {
-    id: "book-project-hail-mary",
+    id: "project-hail-mary",
     kind: "standalone",
     title: "Project Hail Mary",
     author: "Andy Weir",
@@ -232,7 +232,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-piranesi",
+    id: "piranesi",
     kind: "standalone",
     title: "Piranesi",
     author: "Susanna Clarke",
@@ -245,7 +245,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-gone-girl",
+    id: "gone-girl",
     kind: "standalone",
     title: "Gone Girl",
     author: "Gillian Flynn",
@@ -263,7 +263,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-lincoln-highway",
+    id: "lincoln-highway",
     kind: "standalone",
     title: "The Lincoln Highway",
     author: "Amor Towles",
@@ -275,18 +275,18 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-normal-people",
+    id: "normal-people",
     kind: "standalone",
     title: "Normal People",
     author: "Sally Rooney",
     publishedDate: new Date("2018-08-30"),
     genreIds: ["genre-literary-fiction", "genre-romance"],
     userData: {
-      ownership: { kind: "unowned" },
+      ownership: { kind: "wishlist" },
     },
   },
   {
-    id: "book-the-shining",
+    id: "the-shining",
     kind: "standalone",
     title: "The Shining",
     author: "Stephen King",
@@ -305,7 +305,7 @@ export const books: Book[] = [
     },
   },
   {
-    id: "book-sapiens",
+    id: "sapiens",
     kind: "standalone",
     title: "Sapiens: A Brief History of Humankind",
     author: "Yuval Noah Harari",
