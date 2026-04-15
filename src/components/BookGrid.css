@@ -1,8 +1,3 @@
-:root {
-  --book-width: 9rem;
-  --book-height: 12rem;
-}
-
 .book-grid {
   display: grid;
   justify-content: center;

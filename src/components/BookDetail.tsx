@@ -7,7 +7,6 @@ import type { BookDetailProps } from "../types/bookDetailProps";
 import { useBookCover } from "../hooks/useBookCover";
 import AddBookBtn from "./widgets/AddBookBtn";
 
-// Claude assisted with generating a defition list structure that I built off of
 function BookDetail({ book, genres, series }: BookDetailProps) {
   const coverUrl = useBookCover(book?.id ?? "");
 
@@ -22,136 +21,155 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
         </div>
       ) : (
         <div>
-          <div className="top-bar">
-            <Link to="/">Back</Link>
-            <Link to={`/book/${book.id}/edit`}>Edit</Link>
-          </div>
           <div className="book-detail-split">
-            <div className="book-detail-cover">
-              {coverUrl && <img src={coverUrl} alt="" />}
+            <div className="book-detail-cover-section">
+              <Link
+                to="/"
+                className="book-detail-cover"
+                title="Return to Shelf"
+              >
+                {coverUrl ? <img src={coverUrl} alt="" /> : <p>{book.title}</p>}
+              </Link>
+              <Link to={`/book/${book.id}/edit`} className="btn">
+                Edit
+              </Link>
             </div>
 
-            <div>
-              <dl className="book-detail-meta">
+            <div className="book-detail-meta">
+              <dl className="book-detail-defitions">
                 <div className="book-detail-group">
-                  <div>
-                    <dt>Title</dt>
-                    <dd>{book.title}</dd>
-                  </div>
-                  <div>
-                    <dt>Author</dt>
-                    <dd>{book.author}</dd>
-                  </div>
-                  {book.isbn && (
-                    <div>
-                      <dt>ISBN</dt>
-                      <dd>{book.isbn}</dd>
+                  <h2 className="book-detail-group-heading">Details</h2>
+                  <div className="book-detail-group-body">
+                    <div className="book-detail-group-pair">
+                      <dt>Title</dt>
+                      <dd>{book.title}</dd>
                     </div>
-                  )}
-                  {book.publishedDate && (
-                    <div>
-                      <dt>Published</dt>
-                      <dd>
-                        {book.publishedDate.toLocaleDateString(undefined, {
-                          year: "numeric",
-                          month: "long",
-                          day: "numeric",
-                        })}
-                      </dd>
+                    <div className="book-detail-group-pair">
+                      <dt>Author</dt>
+                      <dd>{book.author}</dd>
                     </div>
-                  )}
-                  {book.genreIds.length > 0 && (
-                    <div>
-                      <dt>Genre(s)</dt>
-                      <dd>
-                        {book.genreIds
-                          .map((id) => genres.find((g) => g.id === id)?.name)
-                          .join(", ")}
-                      </dd>
-                    </div>
-                  )}
-                </div>
-
-                {book.kind === "series" && series && (
-                  <div className="book-detail-group">
-                    {series.books && series.books.length > 0 && (
-                      <div>
-                        <dt>Series</dt>
+                    {book.publishedDate && (
+                      <div className="book-detail-group-pair">
+                        <dt>Published</dt>
                         <dd>
-                          <p>{series.info.name}</p>
-                          <ol className="book-detail-series-list">
-                            {series.books
-                              .filter(
-                                (b): b is Extract<Book, { kind: "series" }> =>
-                                  b.kind === "series",
-                              )
-                              .sort((a, b) => a.seriesOrder - b.seriesOrder)
-                              .map((b) => (
-                                <li
-                                  key={b.id}
-                                  className={
-                                    b.id === book.id
-                                      ? "book-detail-series-current"
-                                      : undefined
-                                  }
-                                  aria-current={
-                                    b.id === book.id ? "page" : undefined
-                                  }
-                                >
-                                  {`${b.seriesOrder}. ${b.title}`}
-                                </li>
-                              ))}
-                          </ol>
+                          {book.publishedDate.toLocaleDateString(undefined, {
+                            year: "numeric",
+                            month: "long",
+                            day: "numeric",
+                          })}
                         </dd>
                       </div>
                     )}
-                  </div>
-                )}
-
-                <div className="book-detail-group">
-                  <div>
-                    <dt>Ownership</dt>
-                    <dd>
-                      {toTitleCase(book.userData.ownership.kind)}
-                      {book.userData.ownership.kind === "digital" &&
-                        ` ${EM_DASH} ` + book.userData.ownership.platform}
-                    </dd>
+                    {book.isbn && (
+                      <div className="book-detail-group-pair">
+                        <dt>ISBN</dt>
+                        <dd>{book.isbn}</dd>
+                      </div>
+                    )}
                   </div>
                 </div>
 
-                {book.userData.notes && (
-                  <div className="book-detail-group">
-                    <div>
-                      <dt>Notes</dt>
-                      <dd>{book.userData.notes}</dd>
-                    </div>
+                <div className="book-detail-group">
+                  <h2 className="book-detail-group-heading">Classification</h2>
+                  <div className="book-detail-group-body">
+                    {book.genreIds.length > 0 && (
+                      <div className="book-detail-group-pair">
+                        <dt>Genre(s)</dt>
+                        <dd>
+                          {book.genreIds
+                            .map((id) => genres.find((g) => g.id === id)?.name)
+                            .join(", ")}
+                        </dd>
+                      </div>
+                    )}
+                    {book.kind === "series" && series && (
+                      <div>
+                        {series.books && series.books.length > 0 && (
+                          <div className="book-detail-group-pair">
+                            <dt>Series</dt>
+                            <dd>
+                              <p>{series.info.name}</p>
+                              <ol className="book-detail-series-list">
+                                {series.books
+                                  .filter(
+                                    (
+                                      b,
+                                    ): b is Extract<Book, { kind: "series" }> =>
+                                      b.kind === "series",
+                                  )
+                                  .sort((a, b) => a.seriesOrder - b.seriesOrder)
+                                  .map((b) => (
+                                    <li
+                                      key={b.id}
+                                      className={
+                                        b.id === book.id
+                                          ? "book-detail-series-current"
+                                          : undefined
+                                      }
+                                      aria-current={
+                                        b.id === book.id ? "page" : undefined
+                                      }
+                                    >
+                                      {`${b.seriesOrder}. ${b.title}`}
+                                    </li>
+                                  ))}
+                              </ol>
+                            </dd>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
+
+                <div className="book-detail-group">
+                  <h2 className="book-detail-group-heading">
+                    Ownership & Notes
+                  </h2>
+                  <div className="book-detail-group-body">
+                    <div className="book-detail-group-pair">
+                      <dt>Ownership</dt>
+                      <dd>
+                        {toTitleCase(book.userData.ownership.kind)}
+                        {book.userData.ownership.kind === "digital" &&
+                          ` ${EM_DASH} ` + book.userData.ownership.platform}
+                      </dd>
+                    </div>
+                    {book.userData.notes && (
+                      <div className="book-detail-group-pair">
+                        <dt>Notes</dt>
+                        <dd>{book.userData.notes}</dd>
+                      </div>
+                    )}
+                  </div>
+                </div>
               </dl>
 
               {book.userData.readthroughs &&
                 book.userData.readthroughs.length > 0 && (
-                  <section className="book-detail-readthroughs">
-                    <h2>Readthroughs</h2>
+                  <div className="book-detail-group">
+                    <h2 className="book-detail-group-heading">Readthroughs</h2>
                     {book.userData.readthroughs.map((rt, i) => (
-                      <dl key={i} className="book-detail-readthrough">
-                        <div>
-                          <dt>Finished</dt>
-                          <dd>{rt.finishedAt.toLocaleDateString()}</dd>
-                        </div>
-                        <div>
-                          <dt>Rating</dt>
-                          <dd>{rt.rating ?? "Unrated"}</dd>
-                        </div>
-                        {rt.notes && (
-                          <div>
-                            <dt>Notes</dt>
-                            <dd>{rt.notes}</dd>
+                      <div key={i} className="book-detail-readthrough">
+                        <div className="book-detail-group-body">
+                          <div className="book-detail-group-pair">
+                            <dt>Finished</dt>
+                            <dd>{rt.finishedAt.toLocaleDateString()}</dd>
                           </div>
-                        )}
-                      </dl>
+                          <div className="book-detail-group-pair">
+                            <dt>Rating</dt>
+                            <dd>{rt.rating ?? "Unrated"}</dd>
+                          </div>
+                          {rt.notes && (
+                            <div className="book-detail-group-pair">
+                              <dt>Notes</dt>
+                              <dd>{rt.notes}</dd>
+                            </div>
+                          )}
+                        </div>
+                      </div>
                     ))}
-                  </section>
+                  </div>
                 )}
             </div>
           </div>

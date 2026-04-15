@@ -142,12 +142,6 @@ function EditBookDetail({
 
   return (
     <div>
-      {book ? (
-        <Link to={`/book/${book.id}`}>Cancel</Link>
-      ) : (
-        <Link to={"/"}>Cancel</Link>
-      )}
-
       {status === "error" && formState.saveError && (
         <p role="alert" className="form-feedback form-feedback--error">
           {formState.saveError}
@@ -178,18 +172,29 @@ function EditBookDetail({
 
       <form onSubmit={handleSubmit} noValidate>
         <div className="book-detail-split">
-          <div className="book-detail-cover">
-            {displayCoverUrl && <img src={displayCoverUrl} alt="" />}
-            <div className="book-detail-cover-edit">
-              <label htmlFor="edit-cover">Change Cover Image</label>
-              <input
-                id="edit-cover"
-                type="file"
-                accept="image/*"
-                onChange={handleCoverChange}
-                disabled={isSaving}
-              />
+          <div className="book-detail-cover-section">
+            <div className="book-detail-cover">
+              {displayCoverUrl && <img src={displayCoverUrl} alt="" />}
+              <div className="book-detail-cover-edit">
+                <label htmlFor="edit-cover">Change Cover Image</label>
+                <input
+                  id="edit-cover"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleCoverChange}
+                  disabled={isSaving}
+                />
+              </div>
             </div>
+            {book ? (
+              <Link to={`/book/${book.id}`} className="btn">
+                Cancel
+              </Link>
+            ) : (
+              <Link to={"/"} className="btn">
+                Cancel
+              </Link>
+            )}
           </div>
 
           <div>

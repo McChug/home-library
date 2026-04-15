@@ -21,7 +21,7 @@ const seedLibrary: Library = {
   series: seedSeries,
 };
 
-const devMode = true;
+const devMode = false;
 const starterLibrary = devMode ? seedLibrary : DEFAULT_LIBRARY;
 
 function LibraryApp() {
