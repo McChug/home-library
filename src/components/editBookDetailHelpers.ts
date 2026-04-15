@@ -21,6 +21,7 @@ export function bookToFields(book: Book | null): BookFormFields {
       seriesId: "",
       seriesOrder: "",
       seriesNewName: "",
+      readthroughs: [],
     };
   }
 
@@ -43,6 +44,12 @@ export function bookToFields(book: Book | null): BookFormFields {
     seriesId: book.kind === "series" ? book.seriesId : "",
     seriesOrder: book.kind === "series" ? String(book.seriesOrder) : "",
     seriesNewName: "",
+    readthroughs:
+      book.userData.readthroughs?.map((r) => ({
+        finishedAt: r.finishedAt.toISOString().slice(0, 10),
+        rating: r.rating != null ? String(r.rating) : "",
+        notes: r.notes ?? "",
+      })) ?? [],
   };
 }
 
@@ -73,10 +80,16 @@ export function fieldsToBook(
       : undefined,
     genreIds: fields.genreIds,
     userData: {
-      // preserve readthroughs if editing an existing book
       ...(original?.userData ?? {}),
       ownership,
       notes: fields.notes.trim() || undefined,
+      readthroughs: fields.readthroughs
+        .filter((r) => r.finishedAt)
+        .map((r) => ({
+          finishedAt: new Date(r.finishedAt),
+          rating: r.rating ? Number(r.rating) : undefined,
+          notes: r.notes.trim() || undefined,
+        })),
     },
   };
 
@@ -147,6 +160,23 @@ export function validate(fields: BookFormFields): BookFormErrors {
     errors.seriesOrder = "Order in series is required.";
   } else if (fields.seriesOrder.trim() && isNaN(Number(fields.seriesOrder))) {
     errors.seriesOrder = "Series order must be a number.";
+  }
+
+  const readthroughErrors = fields.readthroughs.map((r) => {
+    if (r.finishedAt && isNaN(Date.parse(r.finishedAt))) {
+      return "Finished date is not a valid date.";
+    }
+    if (
+      r.rating &&
+      (isNaN(Number(r.rating)) || Number(r.rating) < 1 || Number(r.rating) > 5)
+    ) {
+      return "Rating must be a number between 1 and 5.";
+    }
+    return "";
+  });
+
+  if (readthroughErrors.some(Boolean)) {
+    errors.readthroughs = readthroughErrors;
   }
 
   return errors;

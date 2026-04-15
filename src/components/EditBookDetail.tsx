@@ -82,6 +82,52 @@ function formReducer(
         },
         errors: { ...state.errors, coverImage: undefined },
       };
+    case "ADD_READTHROUGH":
+      return {
+        ...state,
+        status: "editing",
+        fields: {
+          ...state.fields,
+          readthroughs: [
+            ...state.fields.readthroughs,
+            { finishedAt: "", rating: "", notes: "" },
+          ],
+        },
+      };
+    case "REMOVE_READTHROUGH":
+      return {
+        ...state,
+        status: "editing",
+        fields: {
+          ...state.fields,
+          readthroughs: state.fields.readthroughs.filter(
+            (_, i) => i !== action.index,
+          ),
+        },
+        errors: {
+          ...state.errors,
+          readthroughs: state.errors.readthroughs?.filter(
+            (_, i) => i !== action.index,
+          ),
+        },
+      };
+    case "SET_READTHROUGH_FIELD":
+      return {
+        ...state,
+        status: "editing",
+        fields: {
+          ...state.fields,
+          readthroughs: state.fields.readthroughs.map((r, i) =>
+            i === action.index ? { ...r, [action.field]: action.value } : r,
+          ),
+        },
+        errors: {
+          ...state.errors,
+          readthroughs: state.errors.readthroughs?.map((e, i) =>
+            i === action.index ? "" : e,
+          ),
+        },
+      };
     case "POPULATE_FROM_FETCH":
       return {
         ...state,
@@ -507,6 +553,96 @@ function EditBookDetail({
                   />
                 </div>
               </div>
+
+              {fields.readthroughs.map((r, i) => (
+                <div key={i} className="book-detail-group">
+                  <div>
+                    <label htmlFor={`edit-readthrough-date-${i}`}>
+                      Finished on
+                    </label>
+                    <input
+                      id={`edit-readthrough-date-${i}`}
+                      type="date"
+                      value={r.finishedAt}
+                      onChange={(e) =>
+                        formDispatch({
+                          type: "SET_READTHROUGH_FIELD",
+                          index: i,
+                          field: "finishedAt",
+                          value: e.target.value,
+                        })
+                      }
+                      disabled={isSaving}
+                    />
+                    {errors.readthroughs?.[i] && (
+                      <span role="alert" className="field-error">
+                        {errors.readthroughs[i]}
+                      </span>
+                    )}
+                  </div>
+
+                  <div>
+                    <label htmlFor={`edit-readthrough-rating-${i}`}>
+                      Rating
+                    </label>
+                    <input
+                      id={`edit-readthrough-rating-${i}`}
+                      type="number"
+                      min={1}
+                      max={5}
+                      step={1}
+                      value={r.rating}
+                      onChange={(e) =>
+                        formDispatch({
+                          type: "SET_READTHROUGH_FIELD",
+                          index: i,
+                          field: "rating",
+                          value: e.target.value,
+                        })
+                      }
+                      disabled={isSaving}
+                      placeholder="Optional"
+                    />
+                  </div>
+
+                  <div>
+                    <label htmlFor={`edit-readthrough-notes-${i}`}>Notes</label>
+                    <textarea
+                      id={`edit-readthrough-notes-${i}`}
+                      value={r.notes}
+                      onChange={(e) =>
+                        formDispatch({
+                          type: "SET_READTHROUGH_FIELD",
+                          index: i,
+                          field: "notes",
+                          value: e.target.value,
+                        })
+                      }
+                      disabled={isSaving}
+                      rows={3}
+                      placeholder="Optional"
+                    />
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      formDispatch({ type: "REMOVE_READTHROUGH", index: i })
+                    }
+                    disabled={isSaving}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+
+              <button
+                type="button"
+                onClick={() => formDispatch({ type: "ADD_READTHROUGH" })}
+                disabled={isSaving}
+              >
+                + Add readthrough
+              </button>
             </div>
 
             <div className="book-detail-actions">

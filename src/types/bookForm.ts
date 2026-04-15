@@ -21,6 +21,13 @@ export interface BookFormFields {
   seriesId: string;
   seriesOrder: string;
   seriesNewName: string;
+  readthroughs: ReadthroughForm[];
+}
+
+export interface ReadthroughForm {
+  finishedAt: string;
+  rating: string;
+  notes: string;
 }
 
 export interface BookFormErrors {
@@ -34,6 +41,7 @@ export interface BookFormErrors {
   seriesId?: string;
   seriesOrder?: string;
   seriesNewName?: string;
+  readthroughs?: string[];
 }
 
 export type BookFormStatus = "editing" | "saving" | "success" | "error";
@@ -50,6 +58,14 @@ export type BookFormAction =
   | { type: "SET_GENRES"; value: string[] }
   | { type: "SET_OWNERSHIP_KIND"; kind: FormOwnershipKind }
   | { type: "SET_COVER_IMAGE"; file: File | null; previewUrl: string | null }
+  | { type: "ADD_READTHROUGH" }
+  | { type: "REMOVE_READTHROUGH"; index: number }
+  | {
+      type: "SET_READTHROUGH_FIELD";
+      index: number;
+      field: keyof ReadthroughForm;
+      value: string;
+    }
   | { type: "POPULATE_FROM_FETCH"; payload: Partial<BookFormFields> }
   | { type: "SUBMIT" }
   | { type: "SAVE_SUCCESS" }
