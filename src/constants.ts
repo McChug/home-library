@@ -14,5 +14,6 @@ export const DEFAULT_LIBRARY: Library = {
   series: [],
 };
 
-export const OPENBOOK_API_URL = "https://openlibrary.org/isbn/";
-export const OPEN_BOOK_COVER_API_URL = "https://covers.openlibrary.org/b/isbn/";
+export const OPENBOOK_API_URL_FRONT =
+  "https://openlibrary.org/api/books?bibkeys=ISBN:";
+export const OPENBOOK_API_URL_BACK = "&format=json&jscmd=data";

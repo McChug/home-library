@@ -13,6 +13,7 @@ export function useLibrary(
     newSeries: Series | null,
     coverBlob: Blob | null,
   ) => Promise<void>,
+  (bookId: string) => void,
 ] {
   const [library, setLibrary] = useState<Library>(
     () => loadLibrary() ?? inititalLibrary,
@@ -47,5 +48,12 @@ export function useLibrary(
     });
   }
 
-  return [library, handleSaveBook] as const;
+  function handleDeleteBook(bookId: string) {
+    setLibrary((prev) => ({
+      ...prev,
+      books: prev.books.filter((b) => b.id !== bookId),
+    }));
+  }
+
+  return [library, handleSaveBook, handleDeleteBook] as const;
 }

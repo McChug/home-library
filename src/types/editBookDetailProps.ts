@@ -9,4 +9,5 @@ export interface EditBookDetailProps {
     newSeries: Series | null,
     coverBlob: Blob | null,
   ) => void;
+  onDelete: (bookId: string) => void;
 }

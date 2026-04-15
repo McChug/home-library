@@ -22,7 +22,8 @@ import type { Series } from "../schemas/library.schema";
 // };
 
 function LibraryApp() {
-  const [library, handleSaveBook] = useLibrary(DEFAULT_LIBRARY);
+  const [library, handleSaveBook, handleDeleteBook] =
+    useLibrary(DEFAULT_LIBRARY);
   // const [library, handleSaveBook] = useLibrary(seedLibrary); // seed data for testing
   const [query, setQuery] = useState<string>("");
   const { bookId } = useParams();
@@ -61,6 +62,7 @@ function LibraryApp() {
             book={selectedBook}
             library={library}
             onSave={handleSaveBook}
+            onDelete={handleDeleteBook}
           />
         ) : (
           <BookDetail

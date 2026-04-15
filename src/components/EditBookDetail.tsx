@@ -7,11 +7,11 @@ import type {
   FormOwnershipKind,
 } from "../types/bookForm";
 import type { EditBookDetailProps } from "../types/editBookDetailProps";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { useBookCover } from "../hooks/useBookCover";
 import type { AsyncState, FetchAction } from "../types/fetch";
 import { fetchJsonUnkown, formatFetchError } from "../api/fetchJsonUnknown";
-import { OPENBOOK_API_URL } from "../constants";
+import { OPENBOOK_API_URL_FRONT, OPENBOOK_API_URL_BACK } from "../constants";
 import type { BookDto } from "../schemas/dto.schema";
 import { bookDtoToPayload, parseBookDto } from "../api/bookDto";
 
@@ -114,7 +114,13 @@ function formReducer(
   }
 }
 
-function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
+function EditBookDetail({
+  book,
+  library,
+  onSave,
+  onDelete,
+}: EditBookDetailProps) {
+  const navigate = useNavigate();
   const initialFields = bookToFields(book);
   const existingCoverUrl = useBookCover(book?.id ?? "");
 
@@ -159,15 +165,19 @@ function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
         library,
       );
 
+      // if a coverPreviewUrl exists without a coverBlob, it's because the url is from the open library api
       const coverBlob = fields.coverImage
         ? new Blob([await fields.coverImage.arrayBuffer()], {
             type: fields.coverImage.type,
           })
-        : null;
+        : fields.coverPreviewUrl
+          ? await fetch(fields.coverPreviewUrl).then((r) => r.blob())
+          : null;
 
       onSave(updatedBook, newSeries, coverBlob);
 
       formDispatch({ type: "SAVE_SUCCESS" });
+      navigate(`/book/${updatedBook.id}`);
     } catch (err) {
       formDispatch({
         type: "SAVE_ERROR",
@@ -203,7 +213,7 @@ function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
 
     fetchDispatch({ type: "LOAD_START" });
 
-    const url = `${OPENBOOK_API_URL}${isbn}.json`;
+    const url = OPENBOOK_API_URL_FRONT + isbn + OPENBOOK_API_URL_BACK;
 
     const controller = new AbortController();
     const { signal } = controller;
@@ -504,6 +514,25 @@ function EditBookDetail({ book, library, onSave }: EditBookDetailProps) {
                 {isSaving ? "Saving…" : "Save"}
               </button>
               {status === "success" && <p>Successfully Saved!</p>}
+              <button
+                type="button"
+                disabled={isSaving}
+                onClick={() => {
+                  if (!book) return;
+
+                  const confirmed = window.confirm(
+                    `Delete "${book.title}"? This cannot be undone.`,
+                  );
+
+                  if (confirmed) {
+                    onDelete(book.id);
+                  }
+
+                  navigate("/");
+                }}
+              >
+                Delete Book
+              </button>
             </div>
           </div>
         </div>
