@@ -25,7 +25,7 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
             <div className="book-detail-cover-section">
               <Link
                 to="/"
-                className="book-detail-cover"
+                className="book-detail-cover move"
                 title="Return to Shelf"
               >
                 {coverUrl ? <img src={coverUrl} alt="" /> : <p>{book.title}</p>}

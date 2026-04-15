@@ -32,6 +32,15 @@ main {
   }
 }
 
+dt,
+label {
+  font-weight: 600;
+}
+
+dd {
+  margin: 0;
+}
+
 .btn {
   border: 2px solid;
   border-radius: 6px;
@@ -39,6 +48,17 @@ main {
 
   text-decoration: none;
   color: black;
+}
+
+button.btn {
+  background: white;
+  font-size: 1em;
+  text-align: start;
+
+  font-family: "Noto Serif", serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .btn:hover {

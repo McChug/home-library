@@ -186,6 +186,9 @@ function EditBookDetail({
                 />
               </div>
             </div>
+            <button className="btn" type="submit" disabled={isSaving}>
+              {isSaving ? "Saving..." : "Save"}
+            </button>
             {book ? (
               <Link to={`/book/${book.id}`} className="btn">
                 Cancel
@@ -195,12 +198,34 @@ function EditBookDetail({
                 Cancel
               </Link>
             )}
+            {status === "success" && <p>Successfully Saved!</p>}
+            <button
+              className="btn"
+              type="button"
+              disabled={isSaving}
+              onClick={() => {
+                if (!book) return;
+
+                const confirmed = window.confirm(
+                  `Delete "${book.title}"? This cannot be undone.`,
+                );
+
+                if (confirmed) {
+                  onDelete(book.id);
+                }
+
+                navigate("/");
+              }}
+            >
+              Delete Book
+            </button>
           </div>
 
-          <div>
-            <div className="book-detail-meta">
-              <div className="book-detail-group">
-                <div>
+          <div className="book-detail-meta">
+            <div className="book-detail-group">
+              <h2 className="book-detail-group-heading">Details</h2>
+              <div className="book-detail-group-body">
+                <div className="book-detail-group-pair">
                   <label htmlFor="edit-title">Title</label>
                   <input
                     id="edit-title"
@@ -216,7 +241,7 @@ function EditBookDetail({
                   )}
                 </div>
 
-                <div>
+                <div className="book-detail-group-pair">
                   <label htmlFor="edit-author">Author</label>
                   <input
                     id="edit-author"
@@ -232,24 +257,7 @@ function EditBookDetail({
                   )}
                 </div>
 
-                <div>
-                  <label htmlFor="edit-isbn">ISBN</label>
-                  <input
-                    id="edit-isbn"
-                    type="text"
-                    value={fields.isbn}
-                    onChange={setField("isbn")}
-                    disabled={isSaving}
-                    placeholder="Optional"
-                  />
-                  {errors.isbn && (
-                    <span id="err-isbn" role="alert" className="field-error">
-                      {errors.isbn}
-                    </span>
-                  )}
-                </div>
-
-                <div>
+                <div className="book-detail-group-pair">
                   <label htmlFor="edit-published">Published</label>
                   <input
                     id="edit-published"
@@ -269,89 +277,116 @@ function EditBookDetail({
                   )}
                 </div>
 
-                <div>
-                  <label>Genre(s)</label>
-                  <select
-                    id="edit-genres"
-                    multiple
-                    value={fields.genreIds}
-                    onChange={handleGenreChange}
+                <div className="book-detail-group-pair">
+                  <label htmlFor="edit-isbn">ISBN</label>
+                  <input
+                    id="edit-isbn"
+                    type="text"
+                    value={fields.isbn}
+                    onChange={setField("isbn")}
                     disabled={isSaving}
-                  >
-                    {genres.map((genre) => (
-                      <option key={genre.id} value={genre.id}>
-                        {genre.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.genreIds && (
-                    <span id="err-genres" role="alert" className="field-error">
-                      {errors.genreIds}
+                    placeholder="Optional"
+                  />
+                  {errors.isbn && (
+                    <span id="err-isbn" role="alert" className="field-error">
+                      {errors.isbn}
                     </span>
                   )}
                 </div>
               </div>
 
               <div className="book-detail-group">
-                <div>
-                  <label>Series</label>
-                  <select
-                    id="edit-series"
-                    value={fields.seriesId}
-                    onChange={setField("seriesId")}
-                    disabled={isSaving}
-                  >
-                    <option value="">No series (standalone)</option>
-                    {series.map((s) => (
-                      <option key={s.id} value={s.id}>
-                        {s.name}
-                      </option>
-                    ))}
-                    <option value="_new">+ Add new series...</option>
-                  </select>
+                <h2 className="book-detail-group-heading">Classification</h2>
+                <div className="book-detail-group-body">
+                  <div className="book-detail-group-pair">
+                    <label>Genre(s)</label>
+                    <select
+                      id="edit-genres"
+                      multiple
+                      value={fields.genreIds}
+                      onChange={handleGenreChange}
+                      disabled={isSaving}
+                    >
+                      {genres.map((genre) => (
+                        <option key={genre.id} value={genre.id}>
+                          {genre.name}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.genreIds && (
+                      <span
+                        id="err-genres"
+                        role="alert"
+                        className="field-error"
+                      >
+                        {errors.genreIds}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="book-detail-group-pair">
+                    <label>Series</label>
+                    <select
+                      id="edit-series"
+                      value={fields.seriesId}
+                      onChange={setField("seriesId")}
+                      disabled={isSaving}
+                    >
+                      <option value="">No series (standalone)</option>
+                      {series.map((s) => (
+                        <option key={s.id} value={s.id}>
+                          {s.name}
+                        </option>
+                      ))}
+                      <option value="_new">+ Add new series...</option>
+                    </select>
+                  </div>
+
+                  {fields.seriesId === "_new" && (
+                    <div className="book-detail-group-pair">
+                      <label htmlFor="edit-series-name">New Series Name</label>
+                      <input
+                        id="edit-series-name"
+                        type="text"
+                        value={fields.seriesNewName}
+                        onChange={setField("seriesNewName")}
+                        disabled={isSaving}
+                      />
+                      {errors.seriesNewName && (
+                        <span role="alert" className="field-error">
+                          {errors.seriesNewName}
+                        </span>
+                      )}
+                    </div>
+                  )}
+
+                  {fields.seriesId && (
+                    <div className="book-detail-group-pair">
+                      <label htmlFor="edit-series-order">Order in Series</label>
+                      <input
+                        id="edit-series-order"
+                        type="number"
+                        min={1}
+                        step={1}
+                        value={fields.seriesOrder}
+                        onChange={setField("seriesOrder")}
+                        disabled={isSaving}
+                      />
+                      {errors.seriesOrder && (
+                        <span role="alert" className="field-error">
+                          {errors.seriesOrder}
+                        </span>
+                      )}
+                    </div>
+                  )}
                 </div>
-
-                {fields.seriesId === "_new" && (
-                  <div>
-                    <label htmlFor="edit-series-name">New Series Name</label>
-                    <input
-                      id="edit-series-name"
-                      type="text"
-                      value={fields.seriesNewName}
-                      onChange={setField("seriesNewName")}
-                      disabled={isSaving}
-                    />
-                    {errors.seriesNewName && (
-                      <span role="alert" className="field-error">
-                        {errors.seriesNewName}
-                      </span>
-                    )}
-                  </div>
-                )}
-
-                {fields.seriesId && (
-                  <div>
-                    <label htmlFor="edit-series-order">Order in Series</label>
-                    <input
-                      id="edit-series-order"
-                      type="number"
-                      min={1}
-                      step={1}
-                      value={fields.seriesOrder}
-                      onChange={setField("seriesOrder")}
-                      disabled={isSaving}
-                    />
-                    {errors.seriesOrder && (
-                      <span role="alert" className="field-error">
-                        {errors.seriesOrder}
-                      </span>
-                    )}
-                  </div>
-                )}
               </div>
+            </div>
 
-              <div className="book-detail-group">
-                <div>
+            <div className="book-detail-group">
+              <h2 className="book-detail-group-heading">Ownership & Notes</h2>
+              <div className="book-detail-group-body">
+                <div className="book-detail-group-pair">
                   <label htmlFor="edit-ownership-kind">Ownership</label>
                   <select
                     id="edit-ownership-kind"
@@ -372,7 +407,7 @@ function EditBookDetail({
                 </div>
 
                 {fields.ownershipKind === "digital" && (
-                  <div>
+                  <div className="book-detail-group-pair">
                     <label htmlFor="edit-platform">Platform</label>
                     <input
                       id="edit-platform"
@@ -393,10 +428,8 @@ function EditBookDetail({
                     )}
                   </div>
                 )}
-              </div>
 
-              <div className="book-detail-group">
-                <div>
+                <div className="book-detail-group-pair">
                   <label htmlFor="edit-notes">Notes</label>
                   <textarea
                     id="edit-notes"
@@ -408,11 +441,14 @@ function EditBookDetail({
                   />
                 </div>
               </div>
+            </div>
 
-              <div>
-                {fields.readthroughs.map((r, i) => (
-                  <div key={i} className="book-detail-group">
-                    <div>
+            <div className="book-detail-readthroughs">
+              <h2 className="book-detail-group-heading">Readthroughs</h2>
+              {fields.readthroughs.map((r, i) => (
+                <div key={i} className="book-detail-readthrough">
+                  <div className="book-detail-group-body">
+                    <div className="book-detail-group-pair">
                       <label htmlFor={`edit-readthrough-date-${i}`}>
                         Finished on
                       </label>
@@ -437,7 +473,7 @@ function EditBookDetail({
                       )}
                     </div>
 
-                    <div>
+                    <div className="book-detail-group-pair">
                       <label htmlFor={`edit-readthrough-rating-${i}`}>
                         Rating
                       </label>
@@ -461,7 +497,7 @@ function EditBookDetail({
                       />
                     </div>
 
-                    <div>
+                    <div className="book-detail-group-pair">
                       <label htmlFor={`edit-readthrough-notes-${i}`}>
                         Notes
                       </label>
@@ -482,53 +518,33 @@ function EditBookDetail({
                       />
                     </div>
 
-                    <button
-                      type="button"
-                      onClick={() =>
-                        formDispatch({ type: "REMOVE_READTHROUGH", index: i })
-                      }
-                      disabled={isSaving}
-                    >
-                      Remove
-                    </button>
+                    <div>
+                      <button
+                        className="btn"
+                        type="button"
+                        onClick={() =>
+                          formDispatch({ type: "REMOVE_READTHROUGH", index: i })
+                        }
+                        disabled={isSaving}
+                      >
+                        Remove
+                      </button>
+                    </div>
                   </div>
-                ))}
+                </div>
+              ))}
 
-                <button
-                  type="button"
-                  onClick={() => formDispatch({ type: "ADD_READTHROUGH" })}
-                  disabled={isSaving}
-                >
-                  + Add readthrough
-                </button>
-              </div>
-            </div>
-
-            <div className="book-detail-actions">
-              <button type="submit" disabled={isSaving}>
-                {isSaving ? "Saving…" : "Save"}
-              </button>
-              {status === "success" && <p>Successfully Saved!</p>}
               <button
+                className="btn"
                 type="button"
+                onClick={() => formDispatch({ type: "ADD_READTHROUGH" })}
                 disabled={isSaving}
-                onClick={() => {
-                  if (!book) return;
-
-                  const confirmed = window.confirm(
-                    `Delete "${book.title}"? This cannot be undone.`,
-                  );
-
-                  if (confirmed) {
-                    onDelete(book.id);
-                  }
-
-                  navigate("/");
-                }}
               >
-                Delete Book
+                + Add readthrough
               </button>
             </div>
+
+            <div className="book-detail-actions"></div>
           </div>
         </div>
       </form>
