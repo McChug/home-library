@@ -4,6 +4,9 @@
 
 .book-grid {
   display: grid;
+  width: 100%;
+  justify-content: center;
+  padding: 4px 0; /* top/bottom padding for scale animation */
   grid-template-columns: repeat(3, var(--book-width));
   gap: 1rem;
 
@@ -17,13 +20,20 @@
   border: none;
 
   overflow-y: hidden;
+  text-decoration: none;
+  color: black;
+  border: 2px solid #a1a1a1;
+  border-radius: 4px;
+
+  transition: 0.1s;
 }
 
 .cover-thumbnail-wrapper:hover {
-  outline: 1px solid black;
+  transform: scale(1.01) translateY(-2px);
 }
 
 .cover-thumbnail-wrapper.selected {
+  border: none;
   color: white;
 }
 
@@ -31,4 +41,36 @@
   display: flex;
   justify-content: space-between;
   gap: 1rem;
+}
+
+.cover {
+  height: 100%;
+  background-color: white;
+  border-radius: 2px 4px 4px 2px;
+  overflow: hidden;
+  text-align: center;
+}
+.cover p {
+  padding: 0 1em;
+}
+
+.cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.selected-cover {
+  color: black;
+}
+
+.cover-thumbnail-wrapper.selected .cover {
+  display: flex;
+  flex-direction: column-reverse;
+  padding: 0;
+  text-align: start;
+}
+
+.cover-thumbnail-wrapper.selected .cover p {
+  padding: 0 0.5em;
 }

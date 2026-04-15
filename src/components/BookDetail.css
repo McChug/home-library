@@ -9,6 +9,8 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  animation: fadeIn 0.4s ease-in forwards;
 }
 
 .book-detail-split {

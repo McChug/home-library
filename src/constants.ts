@@ -2,6 +2,7 @@ import { genres } from "./fixtures";
 import type { Library } from "./schemas/library.schema";
 
 export const EM_DASH = "—";
+export const PLUS_CHAR = "+";
 
 export const LIBRARY_KEY = "library";
 

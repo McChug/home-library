@@ -7,7 +7,7 @@ function Search({ filterBooks }: { filterBooks: (s: string) => void }) {
 
   return (
     <div className="search">
-      <label htmlFor="search">Search: </label>
+      <label htmlFor="search">Search</label>
       <input id="search" onChange={search} />
     </div>
   );

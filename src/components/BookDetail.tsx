@@ -5,6 +5,7 @@ import { toTitleCase } from "../utils/toTitleCase";
 import { EM_DASH } from "../constants";
 import type { BookDetailProps } from "../types/bookDetailProps";
 import { useBookCover } from "../hooks/useBookCover";
+import AddBookBtn from "./widgets/AddBookBtn";
 
 // Claude assisted with generating a defition list structure that I built off of
 function BookDetail({ book, genres, series }: BookDetailProps) {
@@ -17,7 +18,7 @@ function BookDetail({ book, genres, series }: BookDetailProps) {
           <h1 className="logo-heading">
             <img src="/logo.svg" width="400" alt="Home Library Catalog" />
           </h1>
-          <Link to={"/book/add"}>Add New Book</Link>
+          <AddBookBtn />
         </div>
       ) : (
         <div>

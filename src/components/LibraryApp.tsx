@@ -77,9 +77,9 @@ function LibraryApp() {
             }
           />
         )}
-        <Search filterBooks={filterBooks} />
       </section>
       <section className="book-list">
+        <Search filterBooks={filterBooks} />
         <BookGrid books={filteredBooks} selectedBookId={selectedBookId} />
       </section>
     </main>
