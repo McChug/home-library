@@ -36,14 +36,19 @@ export function bookDtoToPayload(
 ): Partial<BookFormFields> {
   const bookData = Object.values(dto)[0]; // this line extracts the actual book data from the json because it comes wrapped in the isbn
 
-  const publishedDate = bookData.publish_date
-    ? new Date(bookData.publish_date).toISOString().split("T")[0]
-    : "";
+  let publishedDate: string | undefined;
+
+  if (bookData.publish_date) {
+    const parsed = new Date(bookData.publish_date);
+    if (!isNaN(parsed.getTime())) {
+      publishedDate = parsed.toISOString().split("T")[0];
+    }
+  }
 
   return {
     title: bookData.title,
     author: bookData.authors?.[0]?.name ?? "",
-    publishedDate,
+    publishedDate: publishedDate ?? "",
     isbn,
     coverPreviewUrl:
       bookData.cover?.medium ??
