@@ -35,6 +35,8 @@ function EditBookDetail({
   const { fields, errors, status } = formState;
   const isSaving = status === "saving";
 
+  const isFetching = fetchState.status === "loading";
+
   const displayCoverUrl = fields.coverPreviewUrl ?? existingCoverUrl;
 
   function setField(field: keyof BookFormFields) {
@@ -150,23 +152,26 @@ function EditBookDetail({
 
       {!book && (
         <div>
-          <p>Add new book with ISBN</p>
-          <input
-            type="text"
-            value={isbnFetchInput}
-            onChange={(e) => setIsbnFetchInput(e.target.value)}
-          />
-          <button
-            onClick={handleFetch}
-            disabled={fetchState.status === "loading"}
-          >
-            {fetchState.status === "loading" ? "Fetching…" : "Fill Form"}
-          </button>
-          {fetchState.status === "error" && (
-            <p role="alert" className="form-feedback form-feedback--error">
-              {fetchState.message}
-            </p>
-          )}
+          <p>Optional: Add new book with ISBN</p>
+          <div className="add-new">
+            <input
+              type="text"
+              value={isbnFetchInput}
+              onChange={(e) => setIsbnFetchInput(e.target.value)}
+            />
+            <button
+              className="btn-secondary"
+              onClick={handleFetch}
+              disabled={isFetching}
+            >
+              {isFetching ? "Fetching…" : "Fill Form"}
+            </button>
+            {fetchState.status === "error" && (
+              <p role="alert" className="form-feedback form-feedback--error">
+                {fetchState.message}
+              </p>
+            )}
+          </div>
         </div>
       )}
 
@@ -189,36 +194,38 @@ function EditBookDetail({
             <button className="btn" type="submit" disabled={isSaving}>
               {isSaving ? "Saving..." : "Save"}
             </button>
+            {status === "success" && <p>Successfully Saved!</p>}
             {book ? (
-              <Link to={`/book/${book.id}`} className="btn">
-                Cancel
-              </Link>
+              <>
+                <Link to={`/book/${book.id}`} className="btn">
+                  Cancel
+                </Link>
+                <button
+                  className="btn-secondary"
+                  type="button"
+                  disabled={isSaving}
+                  onClick={() => {
+                    if (!book) return;
+
+                    const confirmed = window.confirm(
+                      `Delete "${book.title}"? This cannot be undone.`,
+                    );
+
+                    if (confirmed) {
+                      onDelete(book.id);
+                    }
+
+                    navigate("/");
+                  }}
+                >
+                  Delete Book
+                </button>
+              </>
             ) : (
               <Link to={"/"} className="btn">
                 Cancel
               </Link>
             )}
-            {status === "success" && <p>Successfully Saved!</p>}
-            <button
-              className="btn"
-              type="button"
-              disabled={isSaving}
-              onClick={() => {
-                if (!book) return;
-
-                const confirmed = window.confirm(
-                  `Delete "${book.title}"? This cannot be undone.`,
-                );
-
-                if (confirmed) {
-                  onDelete(book.id);
-                }
-
-                navigate("/");
-              }}
-            >
-              Delete Book
-            </button>
           </div>
 
           <div className="book-detail-meta">
@@ -234,12 +241,12 @@ function EditBookDetail({
                     onChange={setField("title")}
                     disabled={isSaving}
                   />
-                  {errors.title && (
-                    <span id="err-title" role="alert" className="field-error">
-                      {errors.title}
-                    </span>
-                  )}
                 </div>
+                {errors.title && (
+                  <span id="err-title" role="alert" className="field-error">
+                    {errors.title}
+                  </span>
+                )}
 
                 <div className="book-detail-group-pair">
                   <label htmlFor="edit-author">Author</label>
@@ -250,12 +257,12 @@ function EditBookDetail({
                     onChange={setField("author")}
                     disabled={isSaving}
                   />
-                  {errors.author && (
-                    <span id="err-author" role="alert" className="field-error">
-                      {errors.author}
-                    </span>
-                  )}
                 </div>
+                {errors.author && (
+                  <span id="err-author" role="alert" className="field-error">
+                    {errors.author}
+                  </span>
+                )}
 
                 <div className="book-detail-group-pair">
                   <label htmlFor="edit-published">Published</label>
@@ -266,16 +273,12 @@ function EditBookDetail({
                     onChange={setField("publishedDate")}
                     disabled={isSaving}
                   />
-                  {errors.publishedDate && (
-                    <span
-                      id="err-published"
-                      role="alert"
-                      className="field-error"
-                    >
-                      {errors.publishedDate}
-                    </span>
-                  )}
                 </div>
+                {errors.publishedDate && (
+                  <span id="err-published" role="alert" className="field-error">
+                    {errors.publishedDate}
+                  </span>
+                )}
 
                 <div className="book-detail-group-pair">
                   <label htmlFor="edit-isbn">ISBN</label>
@@ -287,12 +290,12 @@ function EditBookDetail({
                     disabled={isSaving}
                     placeholder="Optional"
                   />
-                  {errors.isbn && (
-                    <span id="err-isbn" role="alert" className="field-error">
-                      {errors.isbn}
-                    </span>
-                  )}
                 </div>
+                {errors.isbn && (
+                  <span id="err-isbn" role="alert" className="field-error">
+                    {errors.isbn}
+                  </span>
+                )}
               </div>
 
               <div className="book-detail-group">
@@ -313,17 +316,12 @@ function EditBookDetail({
                         </option>
                       ))}
                     </select>
-                    {errors.genreIds && (
-                      <span
-                        id="err-genres"
-                        role="alert"
-                        className="field-error"
-                      >
-                        {errors.genreIds}
-                      </span>
-                    )}
                   </div>
-
+                  {errors.genreIds && (
+                    <span id="err-genres" role="alert" className="field-error">
+                      {errors.genreIds}
+                    </span>
+                  )}
                   <div className="book-detail-group-pair">
                     <label>Series</label>
                     <select
@@ -341,7 +339,6 @@ function EditBookDetail({
                       <option value="_new">+ Add new series...</option>
                     </select>
                   </div>
-
                   {fields.seriesId === "_new" && (
                     <div className="book-detail-group-pair">
                       <label htmlFor="edit-series-name">New Series Name</label>
@@ -352,12 +349,12 @@ function EditBookDetail({
                         onChange={setField("seriesNewName")}
                         disabled={isSaving}
                       />
-                      {errors.seriesNewName && (
-                        <span role="alert" className="field-error">
-                          {errors.seriesNewName}
-                        </span>
-                      )}
                     </div>
+                  )}
+                  {errors.seriesNewName && (
+                    <span role="alert" className="field-error">
+                      {errors.seriesNewName}
+                    </span>
                   )}
 
                   {fields.seriesId && (
@@ -372,12 +369,12 @@ function EditBookDetail({
                         onChange={setField("seriesOrder")}
                         disabled={isSaving}
                       />
-                      {errors.seriesOrder && (
-                        <span role="alert" className="field-error">
-                          {errors.seriesOrder}
-                        </span>
-                      )}
                     </div>
+                  )}
+                  {errors.seriesOrder && (
+                    <span role="alert" className="field-error">
+                      {errors.seriesOrder}
+                    </span>
                   )}
                 </div>
               </div>
@@ -417,16 +414,12 @@ function EditBookDetail({
                       disabled={isSaving}
                       placeholder="e.g. Kindle, Kobo"
                     />
-                    {errors.ownershipPlatform && (
-                      <span
-                        id="err-platform"
-                        role="alert"
-                        className="field-error"
-                      >
-                        {errors.ownershipPlatform}
-                      </span>
-                    )}
                   </div>
+                )}
+                {errors.ownershipPlatform && (
+                  <span id="err-platform" role="alert" className="field-error">
+                    {errors.ownershipPlatform}
+                  </span>
                 )}
 
                 <div className="book-detail-group-pair">
@@ -466,11 +459,6 @@ function EditBookDetail({
                         }
                         disabled={isSaving}
                       />
-                      {errors.readthroughs?.[i] && (
-                        <span role="alert" className="field-error">
-                          {errors.readthroughs[i]}
-                        </span>
-                      )}
                     </div>
 
                     <div className="book-detail-group-pair">
@@ -517,6 +505,11 @@ function EditBookDetail({
                         placeholder="Optional"
                       />
                     </div>
+                    {errors.readthroughs?.[i] && (
+                      <span role="alert" className="field-error">
+                        {errors.readthroughs[i]}
+                      </span>
+                    )}
 
                     <div>
                       <button

@@ -148,6 +148,24 @@
   font-weight: 600;
 }
 
+.add-new {
+  display: flex;
+  max-width: 25ch;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.add-new input {
+  height: 1.5rem;
+  padding: 0 5px;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.field-error {
+  color: var(--error);
+}
+
 @media (width < 730px) {
   .book-detail-split {
     flex-direction: column;

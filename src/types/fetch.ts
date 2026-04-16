@@ -14,6 +14,7 @@ export type FetchError =
   | { kind: "http"; status: number; statusText: string }
   | { kind: "parse"; message: string }
   | { kind: "schema"; message: string }
+  | { kind: "empty"; message: string }
   | { kind: "aborted" };
 
 export type Result<T> =

@@ -13,6 +13,10 @@ const BookDataSchema = z.object({
     .optional(),
 });
 
-export const BookDtoSchema = z.record(z.string(), BookDataSchema);
+export const BookDtoSchema = z
+  .record(z.string(), BookDataSchema)
+  .refine((obj) => Object.keys(obj).length > 0, {
+    message: "At least one book is required",
+  });
 
 export type BookDto = z.infer<typeof BookDtoSchema>;

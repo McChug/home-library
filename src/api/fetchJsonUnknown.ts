@@ -35,7 +35,7 @@ export async function fetchJsonUnkown(
 export function formatFetchError(error: FetchError): string {
   switch (error.kind) {
     case "network":
-      return `Network error: ${error.message}`;
+      return `Couldn't search for book. Please check your internet connection.`;
     case "http":
       if (error.status === 404) {
         return "404: No book was found with the provided ISBN.";
@@ -48,6 +48,8 @@ export function formatFetchError(error: FetchError): string {
       return `Failed to parse response: ${error.message}`;
     case "schema":
       return `Schema mismatch on response object: ${error.message}`;
+    case "empty":
+      return `Could not find any books with the provided ISBN.`;
     default:
       return "";
   }

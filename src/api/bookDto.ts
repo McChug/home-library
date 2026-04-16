@@ -3,6 +3,13 @@ import type { BookFormFields } from "../types/bookForm";
 import type { Result } from "../types/fetch";
 
 export function parseBookDto(data: unknown): Result<BookDto> {
+  if (isEmptyObject(data)) {
+    return {
+      ok: false,
+      error: { kind: "empty", message: "No book data returned" },
+    };
+  }
+
   const result = BookDtoSchema.safeParse(data);
   if (!result.success) {
     return {
@@ -12,6 +19,15 @@ export function parseBookDto(data: unknown): Result<BookDto> {
   }
 
   return { ok: true, data: result.data };
+}
+
+function isEmptyObject(value: unknown): value is Record<string, unknown> {
+  return (
+    typeof value === "object" &&
+    value !== null &&
+    !Array.isArray(value) &&
+    Object.keys(value).length === 0
+  );
 }
 
 export function bookDtoToPayload(

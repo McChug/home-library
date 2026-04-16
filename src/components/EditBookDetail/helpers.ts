@@ -163,15 +163,24 @@ export function validate(fields: BookFormFields): BookFormErrors {
   }
 
   const readthroughErrors = fields.readthroughs.map((r) => {
-    if (r.finishedAt && isNaN(Date.parse(r.finishedAt))) {
+    if (r.finishedAt === "" || isNaN(Date.parse(r.finishedAt))) {
       return "Finished date is not a valid date.";
     }
+
+    if (r.finishedAt && !isNaN(Date.parse(r.finishedAt))) {
+      const year = new Date(r.finishedAt).getFullYear();
+      if (year < 1900) {
+        return "Finished date must be later than 1900.";
+      }
+    }
+
     if (
       r.rating &&
       (isNaN(Number(r.rating)) || Number(r.rating) < 1 || Number(r.rating) > 5)
     ) {
       return "Rating must be a number between 1 and 5.";
     }
+
     return "";
   });
 
