@@ -9,13 +9,14 @@ import AddBookBtn from "./widgets/AddBookBtn";
 
 function BookDetail({ book, genres, series }: BookDetailProps) {
   const coverUrl = useBookCover(book?.id ?? "");
+  const logoSrc = `${import.meta.env.BASE_URL}logo.svg`;
 
   return (
     <>
       {!book ? (
         <div className="page-title">
           <h1 className="logo-heading">
-            <img src="/logo.svg" width="400" alt="Home Library Catalog" />
+            <img src={logoSrc} width="400" alt="Home Library Catalog" />
           </h1>
           <AddBookBtn />
         </div>
