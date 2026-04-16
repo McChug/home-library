@@ -1,6 +1,6 @@
 # Home Library Catalog
 
-## ISBNS
+## ISBNs
 
 - **Fantastic Mr. Fox:** 9780140328721
 - **Anne of Green Gables:** 9781402714511

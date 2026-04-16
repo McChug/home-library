@@ -145,7 +145,7 @@ function EditBookDetail({
   return (
     <div>
       {status === "error" && formState.saveError && (
-        <p role="alert" className="form-feedback form-feedback--error">
+        <p role="alert" className="field-error">
           {formState.saveError}
         </p>
       )}
@@ -167,7 +167,7 @@ function EditBookDetail({
               {isFetching ? "Fetching…" : "Fill Form"}
             </button>
             {fetchState.status === "error" && (
-              <p role="alert" className="form-feedback form-feedback--error">
+              <p role="alert" className="field-error">
                 {fetchState.message}
               </p>
             )}
